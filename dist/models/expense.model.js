@@ -21,21 +21,21 @@ __decorate([
     __metadata("design:type", Number)
 ], Expense.prototype, "amount", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Expense.prototype, "type", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ default: false }),
+    __metadata("design:type", Boolean)
+], Expense.prototype, "isArchived", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Expense.prototype, "category", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
-    __metadata("design:type", String)
-], Expense.prototype, "userId", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.default.Schema.Types.ObjectId, ref: 'User' }),
+    (0, mongoose_1.Prop)({ type: mongoose_2.default.Schema.Types.ObjectId, ref: "User" }),
     __metadata("design:type", user_model_1.User)
-], Expense.prototype, "user", void 0);
+], Expense.prototype, "userId", void 0);
 exports.Expense = Expense = __decorate([
     (0, mongoose_1.Schema)({
         timestamps: true,

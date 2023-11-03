@@ -22,12 +22,13 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument } from "mongoose";
 export type UserDocument = HydratedDocument<User>;
 export declare class User {
     firstName: string;
     email: string;
     password: string;
+    role: string;
 }
 export declare const UserSchema: import("mongoose").Schema<User, import("mongoose").Model<User, any, any, any, import("mongoose").Document<unknown, any, User> & User & {
     _id: import("mongoose").Types.ObjectId;

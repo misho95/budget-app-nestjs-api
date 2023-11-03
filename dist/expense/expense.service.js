@@ -17,18 +17,41 @@ const common_1 = require("@nestjs/common");
 const expense_model_1 = require("../models/expense.model");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const user_model_1 = require("../models/user.model");
 let ExpenseService = class ExpenseService {
-    constructor(expenseModel) {
+    constructor(expenseModel, userModel) {
         this.expenseModel = expenseModel;
+        this.userModel = userModel;
     }
     userExpenses(userId) {
         return this.expenseModel.find({ userId: userId });
+    }
+    async create(userId, input) {
+        const user = await this.userModel.findOne({ _id: userId });
+        const expense = new this.expenseModel();
+        const { type, category, amount } = input;
+        expense.userId = user;
+        expense.type = type;
+        expense.category = category;
+        expense.amount = amount;
+        await expense.save();
+        return { status: "ok!" };
+    }
+    async archiveExpense(expenseId, archived) {
+        const expense = await this.expenseModel.findOne({ _id: expenseId });
+        if (expense.isArchived === archived) {
+            return new common_1.BadRequestException(`Expense Already ${archived ? "Archived" : "UnArchaived"} `);
+        }
+        await this.expenseModel.updateOne({ _id: expenseId }, { $set: { isArchived: archived } });
+        return { status: "ok!" };
     }
 };
 exports.ExpenseService = ExpenseService;
 exports.ExpenseService = ExpenseService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(expense_model_1.Expense.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(1, (0, mongoose_1.InjectModel)(user_model_1.User.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model])
 ], ExpenseService);
 //# sourceMappingURL=expense.service.js.map

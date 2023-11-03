@@ -22,14 +22,24 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Expense } from '../models/expense.model';
-import { Model } from 'mongoose';
+import { BadRequestException } from "@nestjs/common";
+import { Expense } from "../models/expense.model";
+import { Model } from "mongoose";
+import { InputAddExpense } from "./expense.interface";
+import { User } from "src/models/user.model";
 export declare class ExpenseService {
     private expenseModel;
-    constructor(expenseModel: Model<Expense>);
+    private userModel;
+    constructor(expenseModel: Model<Expense>, userModel: Model<User>);
     userExpenses(userId: string): import("mongoose").Query<(import("mongoose").Document<unknown, {}, Expense> & Expense & {
         _id: import("mongoose").Types.ObjectId;
     })[], import("mongoose").Document<unknown, {}, Expense> & Expense & {
         _id: import("mongoose").Types.ObjectId;
     }, {}, Expense, "find">;
+    create(userId: string, input: InputAddExpense): Promise<{
+        status: string;
+    }>;
+    archiveExpense(expenseId: string, archived: boolean): Promise<BadRequestException | {
+        status: string;
+    }>;
 }

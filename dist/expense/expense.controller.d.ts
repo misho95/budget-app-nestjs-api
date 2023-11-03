@@ -23,8 +23,9 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
-import { ExpenseService } from './expense.service';
-import { Request } from 'express';
+import { ExpenseService } from "./expense.service";
+import { Request } from "express";
+import { ExpenseValidation } from "./expense.validation";
 interface AppRequest extends Request {
     userId: string;
 }
@@ -36,5 +37,11 @@ export declare class ExpenseController {
     })[], import("mongoose").Document<unknown, {}, import("../models/expense.model").Expense> & import("../models/expense.model").Expense & {
         _id: import("mongoose").Types.ObjectId;
     }, {}, import("../models/expense.model").Expense, "find">;
+    addExpense(req: AppRequest, input: ExpenseValidation): Promise<{
+        status: string;
+    }>;
+    isArchived(expenseId: string, archived: boolean): Promise<import("@nestjs/common").BadRequestException | {
+        status: string;
+    }>;
 }
 export {};
