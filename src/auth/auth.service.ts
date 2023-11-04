@@ -1,16 +1,16 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { AuthToken, InputSignIn, InputSignUp } from './auth.interface';
-import { InjectModel } from '@nestjs/mongoose';
-import { User } from '../models/user.model';
-import { Model } from 'mongoose';
-import { hashSync, compareSync } from 'bcryptjs';
-import { JwtService } from '@nestjs/jwt';
+import { BadRequestException, Injectable } from "@nestjs/common";
+import { AuthToken, InputSignIn, InputSignUp } from "./auth.interface";
+import { InjectModel } from "@nestjs/mongoose";
+import { User } from "../models/user.model";
+import { Model } from "mongoose";
+import { hashSync, compareSync } from "bcryptjs";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwt: JwtService,
-    @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(User.name) private userModel: Model<User>
   ) {}
 
   async session(userId: string) {
@@ -25,12 +25,12 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new BadRequestException('invalid credentials');
+      throw new BadRequestException("invalid credentials");
     }
 
     const passwordValid = compareSync(input.password, user.password);
     if (!passwordValid) {
-      throw new BadRequestException('invalid credentials');
+      throw new BadRequestException("invalid credentials");
     }
 
     const token = this.jwt.sign({ id: user.id });
@@ -43,7 +43,7 @@ export class AuthService {
     });
 
     if (user) {
-      throw new BadRequestException('email taken!');
+      throw new BadRequestException("email taken!");
     }
 
     user = new this.userModel();

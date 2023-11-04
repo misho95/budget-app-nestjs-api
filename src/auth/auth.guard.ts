@@ -1,5 +1,5 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { Injectable, CanActivate, ExecutionContext } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -9,13 +9,13 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
 
     // 2. READ HEADERS
-    const headers = request['headers'];
+    const headers = request["headers"];
 
     // 3. EXTRACT AUTHORIZATION HEADER
-    const hasTokenHeader = 'authorization' in headers;
+    const hasTokenHeader = "authorization" in headers;
     if (!hasTokenHeader) return false;
 
-    const token = headers['authorization'];
+    const token = headers["authorization"];
 
     try {
       // 4. TOKEN VALIDATION;

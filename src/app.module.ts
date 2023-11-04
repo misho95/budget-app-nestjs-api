@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
 import { AuthModule } from "./auth/auth.module";
 import { MongooseModule } from "@nestjs/mongoose";
 import { ExpenseModule } from "./expense/expense.module";
+import { RolesGuard } from "src/auth/role.guard";
+import { APP_GUARD } from "@nestjs/core";
+import { AuthGuard } from "./auth/auth.guard";
 
 @Module({
   imports: [
@@ -13,7 +14,16 @@ import { ExpenseModule } from "./expense/expense.module";
     ExpenseModule,
     AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

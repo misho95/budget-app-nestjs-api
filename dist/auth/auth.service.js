@@ -34,11 +34,11 @@ let AuthService = class AuthService {
             email: input.email,
         });
         if (!user) {
-            throw new common_1.BadRequestException('invalid credentials');
+            throw new common_1.BadRequestException("invalid credentials");
         }
         const passwordValid = (0, bcryptjs_1.compareSync)(input.password, user.password);
         if (!passwordValid) {
-            throw new common_1.BadRequestException('invalid credentials');
+            throw new common_1.BadRequestException("invalid credentials");
         }
         const token = this.jwt.sign({ id: user.id });
         return { accessToken: token };
@@ -48,7 +48,7 @@ let AuthService = class AuthService {
             email: input.email,
         });
         if (user) {
-            throw new common_1.BadRequestException('email taken!');
+            throw new common_1.BadRequestException("email taken!");
         }
         user = new this.userModel();
         user.firstName = input.firstName;

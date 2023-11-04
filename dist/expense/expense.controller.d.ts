@@ -40,6 +40,15 @@ export declare class ExpenseController {
     addExpense(req: AppRequest, input: ExpenseValidation): Promise<{
         status: string;
     }>;
+    editExpense(expenseId: string, req: AppRequest, input: ExpenseValidation): Promise<{
+        status: string;
+    }>;
+    deleteExpense(expenseId: string, req: AppRequest): Promise<{
+        Status: string;
+    }>;
+    expenseByArchived(filter: boolean): Promise<(import("mongoose").Document<unknown, {}, import("../models/expense.model").Expense> & import("../models/expense.model").Expense & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
     isArchived(expenseId: string, archived: boolean): Promise<import("@nestjs/common").BadRequestException | {
         status: string;
     }>;

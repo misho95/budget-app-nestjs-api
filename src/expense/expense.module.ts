@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { Module } from "@nestjs/common";
+import { MongooseModule } from "@nestjs/mongoose";
 
-import { Expense, ExpenseSchema } from '../models/expense.model';
-import { ExpenseController } from './expense.controller';
-import { ExpenseService } from './expense.service';
-import { User, UserSchema } from 'src/models/user.model';
+import { Expense, ExpenseSchema } from "../models/expense.model";
+import { ExpenseController } from "./expense.controller";
+import { ExpenseService } from "./expense.service";
+import { User, UserSchema } from "src/models/user.model";
 
 @Module({
   imports: [

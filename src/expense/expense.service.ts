@@ -30,6 +30,26 @@ export class ExpenseService {
     return { status: "ok!" };
   }
 
+  async edit(expenseId: string, input: InputAddExpense) {
+    const { category, type, amount } = input;
+    await this.expenseModel.updateOne(
+      { _id: expenseId },
+      {
+        $set: {
+          category,
+          type,
+          amount,
+        },
+      }
+    );
+    return { status: "ok!" };
+  }
+
+  async delete(expenseId: string) {
+    await this.expenseModel.deleteOne({ _id: expenseId });
+    return { Status: "ok!" };
+  }
+
   async archiveExpense(expenseId: string, archived: boolean) {
     const expense = await this.expenseModel.findOne({ _id: expenseId });
 
@@ -44,5 +64,9 @@ export class ExpenseService {
       { $set: { isArchived: archived } }
     );
     return { status: "ok!" };
+  }
+
+  async getExpenseByArchived(filter: boolean) {
+    return await this.expenseModel.find({ isArchived: filter });
   }
 }

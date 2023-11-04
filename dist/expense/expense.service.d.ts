@@ -39,7 +39,16 @@ export declare class ExpenseService {
     create(userId: string, input: InputAddExpense): Promise<{
         status: string;
     }>;
+    edit(expenseId: string, input: InputAddExpense): Promise<{
+        status: string;
+    }>;
+    delete(expenseId: string): Promise<{
+        Status: string;
+    }>;
     archiveExpense(expenseId: string, archived: boolean): Promise<BadRequestException | {
         status: string;
     }>;
+    getExpenseByArchived(filter: boolean): Promise<(import("mongoose").Document<unknown, {}, Expense> & Expense & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
 }
