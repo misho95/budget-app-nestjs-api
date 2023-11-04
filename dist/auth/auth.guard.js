@@ -8,13 +8,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthGuard = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
+const mongoose_1 = require("@nestjs/mongoose");
+const user_model_1 = require("../models/user.model");
+const mongoose_2 = require("mongoose");
 let AuthGuard = class AuthGuard {
-    constructor(jwt) {
+    constructor(jwt, userModel) {
         this.jwt = jwt;
+        this.userModel = userModel;
     }
     canActivate(context) {
         const request = context.switchToHttp().getRequest();
@@ -38,6 +45,8 @@ let AuthGuard = class AuthGuard {
 exports.AuthGuard = AuthGuard;
 exports.AuthGuard = AuthGuard = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [jwt_1.JwtService])
+    __param(1, (0, mongoose_1.InjectModel)(user_model_1.User.name)),
+    __metadata("design:paramtypes", [jwt_1.JwtService,
+        mongoose_2.Model])
 ], AuthGuard);
 //# sourceMappingURL=auth.guard.js.map

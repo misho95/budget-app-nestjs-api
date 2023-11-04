@@ -1,7 +1,10 @@
 import { CanActivate, ExecutionContext } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
+import { User } from "src/models/user.model";
+import { Model } from "mongoose";
 export declare class AuthGuard implements CanActivate {
     private readonly jwt;
-    constructor(jwt: JwtService);
+    private userModel;
+    constructor(jwt: JwtService, userModel: Model<User>);
     canActivate(context: ExecutionContext): boolean;
 }
