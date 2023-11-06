@@ -49,6 +49,10 @@ let ExpenseService = class ExpenseService {
         return { status: "ok!" };
     }
     async delete(expenseId) {
+        const expnese = await this.expenseModel.findOne({ _id: expenseId });
+        if (!expnese) {
+            return new common_1.BadRequestException({ status: "Invalid Id" });
+        }
         await this.expenseModel.deleteOne({ _id: expenseId });
         return { Status: "ok!" };
     }
@@ -60,8 +64,8 @@ let ExpenseService = class ExpenseService {
         await this.expenseModel.updateOne({ _id: expenseId }, { $set: { isArchived: archived } });
         return { status: "ok!" };
     }
-    async getExpenseByArchived(filter) {
-        return await this.expenseModel.find({ isArchived: filter });
+    async getExpenseByArchived(filter, userId) {
+        return await this.expenseModel.find({ isArchived: filter, userId });
     }
 };
 exports.ExpenseService = ExpenseService;

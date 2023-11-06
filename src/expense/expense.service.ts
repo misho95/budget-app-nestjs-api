@@ -46,6 +46,10 @@ export class ExpenseService {
   }
 
   async delete(expenseId: string) {
+    const expnese = await this.expenseModel.findOne({ _id: expenseId });
+    if (!expnese) {
+      return new BadRequestException({ status: "Invalid Id" });
+    }
     await this.expenseModel.deleteOne({ _id: expenseId });
     return { Status: "ok!" };
   }
@@ -66,7 +70,7 @@ export class ExpenseService {
     return { status: "ok!" };
   }
 
-  async getExpenseByArchived(filter: boolean) {
-    return await this.expenseModel.find({ isArchived: filter });
+  async getExpenseByArchived(filter: boolean, userId: string) {
+    return await this.expenseModel.find({ isArchived: filter, userId });
   }
 }

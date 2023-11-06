@@ -33,6 +33,7 @@ export declare class AuthService {
     session(userId: string): Promise<import("mongoose").Document<unknown, {}, User> & User & {
         _id: import("mongoose").Types.ObjectId;
     }>;
+    deleteAccount(userId: string): Promise<import("mongodb").DeleteResult>;
     signin(input: InputSignIn): Promise<AuthToken>;
     signup(input: InputSignUp): Promise<AuthToken>;
 }

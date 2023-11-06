@@ -12,5 +12,6 @@ export declare class AuthController {
     signIn(input: InputSignIn): Promise<AuthToken>;
     signUp(input: SignUpValidator): Promise<AuthToken>;
     session(request: AppRequest): Promise<User>;
+    deleteAccount(userId: string): Promise<import("mongodb").DeleteResult>;
 }
 export {};

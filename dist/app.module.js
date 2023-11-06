@@ -11,9 +11,6 @@ const common_1 = require("@nestjs/common");
 const auth_module_1 = require("./auth/auth.module");
 const mongoose_1 = require("@nestjs/mongoose");
 const expense_module_1 = require("./expense/expense.module");
-const role_guard_1 = require("./auth/role.guard");
-const core_1 = require("@nestjs/core");
-const auth_guard_1 = require("./auth/auth.guard");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -25,16 +22,7 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
         ],
         controllers: [],
-        providers: [
-            {
-                provide: core_1.APP_GUARD,
-                useClass: auth_guard_1.AuthGuard,
-            },
-            {
-                provide: core_1.APP_GUARD,
-                useClass: role_guard_1.RolesGuard,
-            },
-        ],
+        providers: [],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

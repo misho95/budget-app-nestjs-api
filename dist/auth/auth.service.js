@@ -29,6 +29,9 @@ let AuthService = class AuthService {
             _id: userId,
         });
     }
+    async deleteAccount(userId) {
+        return this.userModel.deleteOne({ _id: userId });
+    }
     async signin(input) {
         const user = await this.userModel.findOne({
             email: input.email,

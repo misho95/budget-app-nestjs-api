@@ -12,43 +12,31 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthGuard = void 0;
+exports.OwnerGuard = void 0;
 const common_1 = require("@nestjs/common");
-const jwt_1 = require("@nestjs/jwt");
 const mongoose_1 = require("@nestjs/mongoose");
-const user_model_1 = require("../models/user.model");
+const expense_model_1 = require("../models/expense.model");
 const mongoose_2 = require("mongoose");
-let AuthGuard = class AuthGuard {
-    constructor(jwt, userModel) {
-        this.jwt = jwt;
-        this.userModel = userModel;
+let OwnerGuard = class OwnerGuard {
+    constructor(expenseModel) {
+        this.expenseModel = expenseModel;
     }
     async canActivate(context) {
         const request = context.switchToHttp().getRequest();
-        const headers = request["headers"];
-        const hasTokenHeader = "authorization" in headers;
-        if (!hasTokenHeader)
-            return false;
-        const token = headers["authorization"];
-        try {
-            const payload = this.jwt.verify(token);
-            const userId = payload.id;
-            const user = await this.userModel.findOne({ _id: userId });
-            request.userId = userId;
-            request.user = user;
-        }
-        catch (error) {
-            new common_1.UnauthorizedException();
+        const userId = request.userId;
+        const expenseId = request.params.expenseId;
+        const expense = await this.expenseModel.findOne({ _id: expenseId });
+        const isEqual = expense.userId.toString() === userId;
+        if (!expense || !isEqual) {
             return false;
         }
         return true;
     }
 };
-exports.AuthGuard = AuthGuard;
-exports.AuthGuard = AuthGuard = __decorate([
+exports.OwnerGuard = OwnerGuard;
+exports.OwnerGuard = OwnerGuard = __decorate([
     (0, common_1.Injectable)(),
-    __param(1, (0, mongoose_1.InjectModel)(user_model_1.User.name)),
-    __metadata("design:paramtypes", [jwt_1.JwtService,
-        mongoose_2.Model])
-], AuthGuard);
-//# sourceMappingURL=auth.guard.js.map
+    __param(0, (0, mongoose_1.InjectModel)(expense_model_1.Expense.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model])
+], OwnerGuard);
+//# sourceMappingURL=owner.guard.js.map

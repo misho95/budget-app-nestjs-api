@@ -15,9 +15,7 @@ import { ExpenseService } from "./expense.service";
 import { AuthGuard } from "src/auth/auth.guard";
 import { Request } from "express";
 import { ExpenseValidation } from "./expense.validation";
-import { Roles } from "src/auth/roles.decoratior";
-import { Role } from "src/auth/role.enum";
-import { RolesGuard } from "src/auth/role.guard";
+import { OwnerGuard } from "src/auth/owner.guard";
 
 interface AppRequest extends Request {
   userId: string;
@@ -39,27 +37,28 @@ export class ExpenseController {
     return this.expenseService.create(req.userId, input);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, OwnerGuard)
   @Put("/:expenseId")
   editExpense(
     @Param("expenseId") expenseId: string,
-    @Req() req: AppRequest,
     @Body() input: ExpenseValidation
   ) {
     return this.expenseService.edit(expenseId, input);
   }
 
-  @Roles(Role.Admin)
-  @UseGuards(AuthGuard, RolesGuard)
+  @UseGuards(AuthGuard, OwnerGuard)
   @Delete("/:expenseId")
-  deleteExpense(@Param("expenseId") expenseId: string, @Req() req: AppRequest) {
+  deleteExpense(@Param("expenseId") expenseId: string) {
     return this.expenseService.delete(expenseId);
   }
 
   @UseGuards(AuthGuard)
   @Get("/archive")
-  expenseByArchived(@Query("filter", ParseBoolPipe) filter: boolean) {
-    return this.expenseService.getExpenseByArchived(filter);
+  expenseByArchived(
+    @Query("filter", ParseBoolPipe) filter: boolean,
+    @Req() req: AppRequest
+  ) {
+    return this.expenseService.getExpenseByArchived(filter, req.userId);
   }
 
   @UseGuards(AuthGuard)

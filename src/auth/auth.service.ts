@@ -5,6 +5,7 @@ import { User } from "../models/user.model";
 import { Model } from "mongoose";
 import { hashSync, compareSync } from "bcryptjs";
 import { JwtService } from "@nestjs/jwt";
+import { Expense } from "src/models/expense.model";
 
 @Injectable()
 export class AuthService {
@@ -17,6 +18,10 @@ export class AuthService {
     return this.userModel.findOne({
       _id: userId,
     });
+  }
+
+  async deleteAccount(userId: string) {
+    return this.userModel.deleteOne({ _id: userId });
   }
 
   async signin(input: InputSignIn): Promise<AuthToken> {
