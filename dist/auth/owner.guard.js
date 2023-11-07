@@ -24,9 +24,13 @@ let OwnerGuard = class OwnerGuard {
     async canActivate(context) {
         const request = context.switchToHttp().getRequest();
         const userId = request.userId;
+        const user = request.user;
         const expenseId = request.params.expenseId;
         const expense = await this.expenseModel.findOne({ _id: expenseId });
         const isEqual = expense.userId.toString() === userId;
+        if (user.role === "admin") {
+            return true;
+        }
         if (!expense || !isEqual) {
             return false;
         }
