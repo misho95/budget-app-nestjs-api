@@ -6,29 +6,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
-const auth_module_1 = require("./V1/auth/auth.module");
+const auth_service_1 = require("./auth.service");
+const auth_controller_1 = require("./auth.controller");
 const mongoose_1 = require("@nestjs/mongoose");
-const expense_module_1 = require("./V1/expense/expense.module");
-const graphql_1 = require("@nestjs/graphql");
-const apollo_1 = require("@nestjs/apollo");
-let AppModule = class AppModule {
+const user_model_1 = require("../models/user.model");
+const jwt_1 = require("@nestjs/jwt");
+let AuthModule = class AuthModule {
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
+exports.AuthModule = AuthModule;
+exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            graphql_1.GraphQLModule.forRoot({
-                driver: apollo_1.ApolloDriver,
-                playground: true,
+            mongoose_1.MongooseModule.forFeature([{ name: user_model_1.User.name, schema: user_model_1.UserSchema }]),
+            jwt_1.JwtModule.register({
+                global: true,
+                secret: "123",
+                signOptions: { expiresIn: "1d" },
             }),
-            mongoose_1.MongooseModule.forRoot("mongodb+srv://misho95:123456789qQq@budget-app-nest.cag0885.mongodb.net/?retryWrites=true&w=majority"),
-            expense_module_1.ExpenseModule,
-            auth_module_1.AuthModule,
         ],
-        controllers: [],
-        providers: [],
+        controllers: [auth_controller_1.AuthController],
+        providers: [auth_service_1.AuthService],
     })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+], AuthModule);
+//# sourceMappingURL=auth.module.js.map

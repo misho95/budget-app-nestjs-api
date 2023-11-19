@@ -12,10 +12,10 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { ExpenseService } from "./expense.service";
-import { AuthGuard } from "src/auth/auth.guard";
+import { AuthGuard } from "src/V1/auth/auth.guard";
 import { Request } from "express";
 import { ExpenseValidation } from "./expense.validation";
-import { OwnerGuard } from "src/auth/owner.guard";
+import { OwnerGuard } from "src/V1/auth/owner.guard";
 
 interface AppRequest extends Request {
   userId: string;

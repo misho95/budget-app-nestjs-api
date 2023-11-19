@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Expense } from "src/models/expense.model";
+import { Expense } from "src/V1/models/expense.model";
 import { Model } from "mongoose";
 
 @Injectable()

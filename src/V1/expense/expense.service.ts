@@ -4,7 +4,7 @@ import { Expense } from "../models/expense.model";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { InputAddExpense } from "./expense.interface";
-import { User } from "src/models/user.model";
+import { User } from "src/V1/models/user.model";
 
 @Injectable()
 export class ExpenseService {

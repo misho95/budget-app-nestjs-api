@@ -6,7 +6,7 @@ import {
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { InjectModel } from "@nestjs/mongoose";
-import { User } from "src/models/user.model";
+import { User } from "src/V1/models/user.model";
 import { Model } from "mongoose";
 
 @Injectable()
