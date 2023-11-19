@@ -5,7 +5,6 @@ import { User } from "../models/user.model";
 import { Model } from "mongoose";
 import { hashSync, compareSync } from "bcryptjs";
 import { JwtService } from "@nestjs/jwt";
-import { Expense } from "src/V1/models/expense.model";
 
 @Injectable()
 export class AuthService {

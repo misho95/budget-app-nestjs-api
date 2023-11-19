@@ -4,7 +4,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { Expense, ExpenseSchema } from "../models/expense.model";
 import { ExpenseController } from "./expense.controller";
 import { ExpenseService } from "./expense.service";
-import { User, UserSchema } from "src/V1/models/user.model";
+import { User, UserSchema } from "src/mongo/models/user.model";
 
 @Module({
   imports: [

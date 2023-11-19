@@ -12,7 +12,7 @@ import { AuthService } from "./auth.service";
 import { AuthToken, InputSignIn } from "./auth.interface";
 import { AuthGuard } from "./auth.guard";
 import { Request } from "express";
-import { User } from "src/V1/models/user.model";
+import { User } from "src/mongo/models/user.model";
 import { SignUpValidator } from "./signup.validation";
 import { RolesGuard } from "./role.guard";
 import { Roles } from "./roles.decoratior";
