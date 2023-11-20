@@ -15,7 +15,7 @@ let ExpenseInputType = class ExpenseInputType {
 };
 exports.ExpenseInputType = ExpenseInputType;
 __decorate([
-    (0, graphql_1.Field)(() => String),
+    (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], ExpenseInputType.prototype, "amount", void 0);
 __decorate([
@@ -33,7 +33,7 @@ let ExpenseEditInputType = class ExpenseEditInputType {
 };
 exports.ExpenseEditInputType = ExpenseEditInputType;
 __decorate([
-    (0, graphql_1.Field)(() => String, { nullable: true }),
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
     __metadata("design:type", Number)
 ], ExpenseEditInputType.prototype, "amount", void 0);
 __decorate([

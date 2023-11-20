@@ -32,6 +32,9 @@ let ExpenseResolver = class ExpenseResolver {
     editExpense(expenseId, body) {
         return this.expenseService.editExpense(expenseId, body);
     }
+    deleteExpense(expenseId) {
+        return this.expenseService.deleteExpense(expenseId);
+    }
 };
 exports.ExpenseResolver = ExpenseResolver;
 __decorate([
@@ -65,6 +68,13 @@ __decorate([
     __metadata("design:paramtypes", [String, expense_types_1.ExpenseEditInputType]),
     __metadata("design:returntype", void 0)
 ], ExpenseResolver.prototype, "editExpense", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, graphql_1.Args)("expenseId")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ExpenseResolver.prototype, "deleteExpense", null);
 exports.ExpenseResolver = ExpenseResolver = __decorate([
     (0, graphql_1.Resolver)(),
     __metadata("design:paramtypes", [expense_service_1.ExpenseService])

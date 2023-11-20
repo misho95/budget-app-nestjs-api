@@ -1,14 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { InputCreateUser } from "./auth.types";
+import { InputCreateUser, User } from "./auth.types";
 
 @Injectable()
 export class AuthService {
-  users() {
-    return {};
-  }
-
-  user() {
-    return {
+  private users: User[] = [
+    {
+      id: "1",
       email: "misho@mail.ru",
       password: "123456",
       profile: {
@@ -17,11 +14,24 @@ export class AuthService {
           hasEnabledSmsNotification: false,
         },
       },
-    };
+    },
+  ];
+
+  user(userId: string) {
+    return this.users.find((u) => u.id === userId);
   }
 
   createUser(body: InputCreateUser) {
-    console.log(body);
+    const { email, password } = body;
+    const newUser = {
+      id: new Date().getTime().toString(),
+      email,
+      password,
+      profile: null,
+    };
+
+    this.users.push(newUser);
+    console.log(this.users);
     return true;
   }
 }

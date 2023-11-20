@@ -24,9 +24,11 @@ export class Profile {
 
 @ObjectType()
 export class User {
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
+  id?: string;
+  @Field(() => String)
   email?: string;
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
   password?: string;
   @Field(() => Profile, { nullable: true })
   profile?: Profile;

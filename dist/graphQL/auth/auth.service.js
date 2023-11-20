@@ -9,23 +9,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 let AuthService = class AuthService {
-    users() {
-        return {};
-    }
-    user() {
-        return {
-            email: "misho@mail.ru",
-            password: "123456",
-            profile: {
-                displayName: "misho95",
-                settings: {
-                    hasEnabledSmsNotification: false,
+    constructor() {
+        this.users = [
+            {
+                id: "1",
+                email: "misho@mail.ru",
+                password: "123456",
+                profile: {
+                    displayName: "misho95",
+                    settings: {
+                        hasEnabledSmsNotification: false,
+                    },
                 },
             },
-        };
+        ];
+    }
+    user(userId) {
+        return this.users.find((u) => u.id === userId);
     }
     createUser(body) {
-        console.log(body);
+        const { email, password } = body;
+        const newUser = {
+            id: new Date().getTime().toString(),
+            email,
+            password,
+            profile: null,
+        };
+        this.users.push(newUser);
+        console.log(this.users);
         return true;
     }
 };

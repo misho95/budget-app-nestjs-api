@@ -2,7 +2,7 @@ import { Field, ObjectType, InputType, Int } from "@nestjs/graphql";
 
 @InputType()
 export class ExpenseInputType {
-  @Field(() => String)
+  @Field(() => Int)
   amount: number;
   @Field(() => String)
   type: string;
@@ -12,7 +12,7 @@ export class ExpenseInputType {
 
 @InputType()
 export class ExpenseEditInputType {
-  @Field(() => String, { nullable: true })
+  @Field(() => Int, { nullable: true })
   amount: number;
   @Field(() => String, { nullable: true })
   type: string;

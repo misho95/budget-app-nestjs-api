@@ -7,8 +7,8 @@ export class AuthResolver {
   constructor(private authService: AuthService) {}
 
   @Query(() => User)
-  user() {
-    return this.authService.user();
+  user(@Args("userId") userId: string) {
+    return this.authService.user(userId);
   }
 
   @Mutation(() => Boolean)

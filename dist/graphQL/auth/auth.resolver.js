@@ -20,8 +20,8 @@ let AuthResolver = class AuthResolver {
     constructor(authService) {
         this.authService = authService;
     }
-    user() {
-        return this.authService.user();
+    user(userId) {
+        return this.authService.user(userId);
     }
     createUser(body) {
         return this.authService.createUser(body);
@@ -30,8 +30,9 @@ let AuthResolver = class AuthResolver {
 exports.AuthResolver = AuthResolver;
 __decorate([
     (0, graphql_1.Query)(() => auth_types_1.User),
+    __param(0, (0, graphql_1.Args)("userId")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AuthResolver.prototype, "user", null);
 __decorate([

@@ -1,15 +1,6 @@
-import { InputCreateUser } from "./auth.types";
+import { InputCreateUser, User } from "./auth.types";
 export declare class AuthService {
-    users(): {};
-    user(): {
-        email: string;
-        password: string;
-        profile: {
-            displayName: string;
-            settings: {
-                hasEnabledSmsNotification: boolean;
-            };
-        };
-    };
+    private users;
+    user(userId: string): User;
     createUser(body: InputCreateUser): boolean;
 }

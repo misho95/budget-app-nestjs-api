@@ -1,17 +1,8 @@
 import { AuthService } from "./auth.service";
-import { InputCreateUser } from "./auth.types";
+import { InputCreateUser, User } from "./auth.types";
 export declare class AuthResolver {
     private authService;
     constructor(authService: AuthService);
-    user(): {
-        email: string;
-        password: string;
-        profile: {
-            displayName: string;
-            settings: {
-                hasEnabledSmsNotification: boolean;
-            };
-        };
-    };
+    user(userId: string): User;
     createUser(body: InputCreateUser): boolean;
 }

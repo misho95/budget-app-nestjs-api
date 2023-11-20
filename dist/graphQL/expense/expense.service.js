@@ -62,7 +62,7 @@ let ExpenseService = class ExpenseService {
         };
         try {
             this.expenses.push(newExpense);
-            console.log(this.expenses);
+            console.log("result:", this.expenses);
             return true;
         }
         catch {
@@ -72,7 +72,7 @@ let ExpenseService = class ExpenseService {
     editExpense(expenseId, body) {
         const { amount, type, category } = body;
         try {
-            const updatedExpenses = this.expenses.map((e) => {
+            this.expenses = this.expenses.map((e) => {
                 if (e.id === expenseId) {
                     return {
                         ...e,
@@ -85,7 +85,20 @@ let ExpenseService = class ExpenseService {
                     return e;
                 }
             });
-            console.log(updatedExpenses);
+            console.log("result:", this.expenses);
+            return true;
+        }
+        catch {
+            return false;
+        }
+    }
+    deleteExpense(expenseId) {
+        try {
+            this.expenses = this.expenses.filter((e) => {
+                if (e.id !== expenseId)
+                    return e;
+            });
+            console.log("result:", this.expenses);
             return true;
         }
         catch {

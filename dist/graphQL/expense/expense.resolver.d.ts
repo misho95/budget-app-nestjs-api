@@ -7,4 +7,5 @@ export declare class ExpenseResolver {
     expenseById(expenseId: string): ExpenseType[];
     addExpense(body: ExpenseInputType): boolean;
     editExpense(expenseId: string, body: ExpenseEditInputType): boolean;
+    deleteExpense(expenseId: string): boolean;
 }

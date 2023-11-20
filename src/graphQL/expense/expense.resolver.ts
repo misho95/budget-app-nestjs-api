@@ -36,4 +36,8 @@ export class ExpenseResolver {
   ) {
     return this.expenseService.editExpense(expenseId, body);
   }
+  @Mutation(() => Boolean)
+  deleteExpense(@Args("expenseId") expenseId: string) {
+    return this.expenseService.deleteExpense(expenseId);
+  }
 }

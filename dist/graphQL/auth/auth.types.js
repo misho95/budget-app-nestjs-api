@@ -53,11 +53,15 @@ let User = class User {
 };
 exports.User = User;
 __decorate([
-    (0, graphql_1.Field)(() => String, { nullable: true }),
+    (0, graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], User.prototype, "id", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => String, { nullable: true }),
+    (0, graphql_1.Field)(() => String),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([

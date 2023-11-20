@@ -3,7 +3,7 @@ import { ExpenseInputType, ExpenseType } from "./expense.types";
 
 @Injectable()
 export class ExpenseService {
-  private readonly expenses: ExpenseType[] = [
+  private expenses: ExpenseType[] = [
     {
       id: "1",
       amount: 200,
@@ -60,7 +60,7 @@ export class ExpenseService {
 
     try {
       this.expenses.push(newExpense);
-      console.log(this.expenses);
+      console.log("result:", this.expenses);
       return true;
     } catch {
       return false;
@@ -71,7 +71,7 @@ export class ExpenseService {
     const { amount, type, category } = body;
 
     try {
-      const updatedExpenses = this.expenses.map((e) => {
+      this.expenses = this.expenses.map((e) => {
         if (e.id === expenseId) {
           return {
             ...e,
@@ -83,7 +83,19 @@ export class ExpenseService {
           return e;
         }
       });
-      console.log(updatedExpenses);
+      console.log("result:", this.expenses);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  deleteExpense(expenseId: string) {
+    try {
+      this.expenses = this.expenses.filter((e) => {
+        if (e.id !== expenseId) return e;
+      });
+      console.log("result:", this.expenses);
       return true;
     } catch {
       return false;
