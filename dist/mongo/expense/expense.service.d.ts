@@ -26,7 +26,7 @@ import { BadRequestException } from "@nestjs/common";
 import { Expense } from "../models/expense.model";
 import { Model } from "mongoose";
 import { InputAddExpense } from "./expense.interface";
-import { User } from "src/V1/models/user.model";
+import { User } from "src/mongo/models/user.model";
 export declare class ExpenseService {
     private expenseModel;
     private userModel;

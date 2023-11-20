@@ -15,9 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExpenseController = void 0;
 const common_1 = require("@nestjs/common");
 const expense_service_1 = require("./expense.service");
-const auth_guard_1 = require("src/V1/auth/auth.guard");
+const auth_guard_1 = require("../auth/auth.guard");
 const expense_validation_1 = require("./expense.validation");
-const owner_guard_1 = require("src/V1/auth/owner.guard");
+const owner_guard_1 = require("../auth/owner.guard");
 let ExpenseController = class ExpenseController {
     constructor(expenseService) {
         this.expenseService = expenseService;

@@ -16,7 +16,7 @@ exports.AuthGuard = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const mongoose_1 = require("@nestjs/mongoose");
-const user_model_1 = require("src/V1/models/user.model");
+const user_model_1 = require("../models/user.model");
 const mongoose_2 = require("mongoose");
 let AuthGuard = class AuthGuard {
     constructor(jwt, userModel) {

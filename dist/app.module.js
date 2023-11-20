@@ -8,11 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const auth_module_1 = require("./V1/auth/auth.module");
 const mongoose_1 = require("@nestjs/mongoose");
-const expense_module_1 = require("./V1/expense/expense.module");
 const graphql_1 = require("@nestjs/graphql");
 const apollo_1 = require("@nestjs/apollo");
+const auth_module_1 = require("./graphQL/auth/auth.module");
+const expense_modul_1 = require("./graphQL/expense/expense.modul");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -21,11 +21,12 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             graphql_1.GraphQLModule.forRoot({
                 driver: apollo_1.ApolloDriver,
+                autoSchemaFile: true,
                 playground: true,
             }),
             mongoose_1.MongooseModule.forRoot("mongodb+srv://misho95:123456789qQq@budget-app-nest.cag0885.mongodb.net/?retryWrites=true&w=majority"),
-            expense_module_1.ExpenseModule,
             auth_module_1.AuthModule,
+            expense_modul_1.ExpenseModule,
         ],
         controllers: [],
         providers: [],

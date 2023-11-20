@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OwnerGuard = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-const expense_model_1 = require("src/V1/models/expense.model");
+const expense_model_1 = require("../models/expense.model");
 const mongoose_2 = require("mongoose");
 let OwnerGuard = class OwnerGuard {
     constructor(expenseModel) {

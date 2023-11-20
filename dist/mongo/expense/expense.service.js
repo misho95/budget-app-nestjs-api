@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const expense_model_1 = require("../models/expense.model");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const user_model_1 = require("src/V1/models/user.model");
+const user_model_1 = require("../models/user.model");
 let ExpenseService = class ExpenseService {
     constructor(expenseModel, userModel) {
         this.expenseModel = expenseModel;
