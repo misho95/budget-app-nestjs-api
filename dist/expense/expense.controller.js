@@ -31,6 +31,9 @@ let ExpenseController = class ExpenseController {
     countExpenses(req, type, value) {
         return this.expenseService.countExpenses(req.userId, type, value);
     }
+    searchExpenses(req, type, category, min_amount, max_amount, date_from, date_to) {
+        return this.expenseService.searchExpenses(req.userId, type, category, min_amount, max_amount, date_from, date_to);
+    }
     expenseById(req, expenseId) {
         return this.expenseService.expenseById(req.userId, expenseId);
     }
@@ -77,6 +80,20 @@ __decorate([
     __metadata("design:paramtypes", [Object, String, String]),
     __metadata("design:returntype", void 0)
 ], ExpenseController.prototype, "countExpenses", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Get)("/search"),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Query)("type")),
+    __param(2, (0, common_1.Query)("category")),
+    __param(3, (0, common_1.Query)("min_amount")),
+    __param(4, (0, common_1.Query)("max_amount")),
+    __param(5, (0, common_1.Query)("date_from")),
+    __param(6, (0, common_1.Query)("date_to")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, String, Number, Number, String, String]),
+    __metadata("design:returntype", void 0)
+], ExpenseController.prototype, "searchExpenses", null);
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)("/:expenseId"),

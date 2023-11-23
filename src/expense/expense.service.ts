@@ -103,7 +103,28 @@ export class ExpenseService {
     }
   }
 
-  async filterExpenses() {
-    console.log("testing...");
+  async searchExpenses(
+    userId: string,
+    type: string,
+    category: string,
+    min_amount: number,
+    max_amount: number,
+    date_from: string,
+    date_to: string
+  ) {
+    const expenses: ExpenseType[] = await this.expenseModel.find({ userId });
+
+    const filteredData = expenses.filter((item) => {
+      const isDateMatched =
+        (!date_from || item.createdAt > date_from) &&
+        (!date_to || item.createdAt < date_to);
+      const isCategoryMatched =
+        !category || item.category.toLowerCase() === category.toLowerCase();
+      const isAmountMatched =
+        (!min_amount || +item.amount > min_amount) &&
+        (!max_amount || +item.amount < max_amount);
+      return isCategoryMatched && isAmountMatched && isDateMatched;
+    });
+    return filteredData;
   }
 }

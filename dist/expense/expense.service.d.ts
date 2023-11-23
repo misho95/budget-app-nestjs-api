@@ -54,5 +54,5 @@ export declare class ExpenseService {
         _id: import("mongoose").Types.ObjectId;
     })[]>;
     countExpenses(userId: string, type: string, value: string): Promise<number | BadRequestException>;
-    filterExpenses(): Promise<void>;
+    searchExpenses(userId: string, type: string, category: string, min_amount: number, max_amount: number, date_from: string, date_to: string): Promise<ExpenseType[]>;
 }

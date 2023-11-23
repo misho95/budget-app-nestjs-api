@@ -48,6 +48,28 @@ export class ExpenseController {
   }
 
   @UseGuards(AuthGuard)
+  @Get("/search")
+  searchExpenses(
+    @Req() req: AppRequest,
+    @Query("type") type: string,
+    @Query("category") category: string,
+    @Query("min_amount") min_amount: number,
+    @Query("max_amount") max_amount: number,
+    @Query("date_from") date_from: string,
+    @Query("date_to") date_to: string
+  ) {
+    return this.expenseService.searchExpenses(
+      req.userId,
+      type,
+      category,
+      min_amount,
+      max_amount,
+      date_from,
+      date_to
+    );
+  }
+
+  @UseGuards(AuthGuard)
   @Get("/:expenseId")
   expenseById(@Req() req: AppRequest, @Param("expenseId") expenseId: string) {
     return this.expenseService.expenseById(req.userId, expenseId);
