@@ -8,7 +8,8 @@ async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.use(cookieParser());
     app.useGlobalPipes(new common_1.ValidationPipe());
-    await app.listen(3000);
+    const port = process.env.PORT || 8080;
+    await app.listen(port);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

@@ -11,13 +11,18 @@ const common_1 = require("@nestjs/common");
 const auth_module_1 = require("./auth/auth.module");
 const mongoose_1 = require("@nestjs/mongoose");
 const expense_module_1 = require("./expense/expense.module");
+const config_1 = require("@nestjs/config");
+console.log("user: ", process.env.load);
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forRoot("mongodb+srv://misho95:123456789qQq@budget-app-nest.cag0885.mongodb.net/?retryWrites=true&w=majority"),
+            config_1.ConfigModule.forRoot({
+                envFilePath: ".secret.env",
+            }),
+            mongoose_1.MongooseModule.forRoot(`mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@budget-app-nest.cag0885.mongodb.net/?retryWrites=true&w=majority`),
             expense_module_1.ExpenseModule,
             auth_module_1.AuthModule,
         ],
