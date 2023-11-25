@@ -19,7 +19,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             config_1.ConfigModule.forRoot(),
-            mongoose_1.MongooseModule.forRoot(`mongodb+srv://budget-app-database-350cec33.mongo.ondigitalocean.com`),
+            mongoose_1.MongooseModule.forRoot(`mongodb+srv://doadmin:E60WP19NnA2L8F54@budget-app-database-350cec33.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=budget-app-database`),
             expense_module_1.ExpenseModule,
             auth_module_1.AuthModule,
         ],
