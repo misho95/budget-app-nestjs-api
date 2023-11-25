@@ -6,11 +6,9 @@ import { ConfigModule } from "@nestjs/config";
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath: ".secret.env",
-    }),
+    ConfigModule.forRoot(),
     MongooseModule.forRoot(
-      `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@budget-app-nest.cag0885.mongodb.net/?retryWrites=true&w=majority`
+      `mongodb+srv://budget-app-database-350cec33.mongo.ondigitalocean.com`
     ),
     ExpenseModule,
     AuthModule,
