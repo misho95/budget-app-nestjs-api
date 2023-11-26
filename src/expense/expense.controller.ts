@@ -105,7 +105,6 @@ export class ExpenseController {
     return this.expenseService.getExpenseByArchived(filter, req.userId);
   }
 
-  @UseGuards(AuthGuard)
   @Put("/archive/:expenseId")
   isArchived(
     @Param("expenseId") expenseId: string,
