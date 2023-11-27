@@ -97,9 +97,9 @@ export class ExpenseController {
   }
 
   @UseGuards(AuthGuard)
-  @Get("/archive")
+  @Get("/archive/filter")
   expenseByArchived(
-    @Query("filter", ParseBoolPipe) filter: boolean,
+    @Query("isarchived", ParseBoolPipe) filter: boolean,
     @Req() req: AppRequest
   ) {
     return this.expenseService.getExpenseByArchived(filter, req.userId);
