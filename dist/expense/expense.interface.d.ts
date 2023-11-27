@@ -6,6 +6,7 @@ export interface InputAddExpense {
 export interface ExpenseType {
     id: string;
     userId: string;
+    type: string;
     amount: number;
     category: string;
     isArchived: boolean;

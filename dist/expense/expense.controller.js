@@ -131,8 +131,8 @@ __decorate([
 ], ExpenseController.prototype, "deleteExpense", null);
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Get)("/archive"),
-    __param(0, (0, common_1.Query)("filter", common_1.ParseBoolPipe)),
+    (0, common_1.Get)("/archive/filter"),
+    __param(0, (0, common_1.Query)("isarchived", common_1.ParseBoolPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Boolean, Object]),
