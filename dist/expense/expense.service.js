@@ -102,8 +102,8 @@ let ExpenseService = class ExpenseService {
                 (!date_to || item.createdAt < date_to);
             const isCategoryMatched = !category || item.category.toLowerCase() === category.toLowerCase();
             const isTypeMatched = !type || item.type.toLowerCase() === type.toLowerCase();
-            const isAmountMatched = (!min_amount || +item.amount > min_amount) &&
-                (!max_amount || +item.amount < max_amount);
+            const isAmountMatched = (!min_amount || +item.amount > +min_amount) &&
+                (!max_amount || +item.amount < +max_amount);
             return (isCategoryMatched && isTypeMatched && isAmountMatched && isDateMatched);
         });
         return filteredData;

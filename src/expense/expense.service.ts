@@ -116,15 +116,15 @@ export class ExpenseService {
 
     const filteredData = expenses.filter((item) => {
       const isDateMatched =
-        (!date_from || item.createdAt > date_from) &&
-        (!date_to || item.createdAt < date_to);
+        (!date_from || Date.parse(item.createdAt) > Date.parse(date_from)) &&
+        (!date_to || Date.parse(item.createdAt) < Date.parse(date_to));
       const isCategoryMatched =
         !category || item.category.toLowerCase() === category.toLowerCase();
       const isTypeMatched =
         !type || item.type.toLowerCase() === type.toLowerCase();
       const isAmountMatched =
-        (!min_amount || +item.amount > min_amount) &&
-        (!max_amount || +item.amount < max_amount);
+        (!min_amount || +item.amount > +min_amount) &&
+        (!max_amount || +item.amount < +max_amount);
       return (
         isCategoryMatched && isTypeMatched && isAmountMatched && isDateMatched
       );
