@@ -40,6 +40,7 @@ export class AuthService {
     }
 
     if (!user.active) {
+      console.log("we are here!!");
       this.userModel.updateOne(
         { _id: user.id },
         {
