@@ -15,7 +15,7 @@ export class User {
   email: string;
   @Prop({ required: true })
   password: string;
-  @Prop({ default: true })
+  @Prop({ default: false })
   active: boolean;
   @Prop({ default: null })
   deactivatedAt: Date | null;
