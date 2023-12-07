@@ -41,7 +41,7 @@ export class AuthService {
 
     if (!user.active) {
       this.userModel.updateOne(
-        { _id: user.id, email: user.email, password: user.password },
+        { _id: user.id },
         {
           $set: {
             active: true,
