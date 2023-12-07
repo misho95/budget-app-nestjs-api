@@ -39,17 +39,6 @@ export class AuthService {
       throw new BadRequestException("invalid credentials");
     }
 
-    if (!user.active) {
-      await this.userModel.updateOne(
-        { _id: user.id, email: user.email, password: user.password },
-        {
-          $set: {
-            active: true,
-          },
-        }
-      );
-    }
-
     const token = this.jwt.sign({ id: user.id });
     return { accessToken: token };
   }
