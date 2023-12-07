@@ -62,6 +62,12 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
+  @Get("/users")
+  users(): Promise<User[]> {
+    return this.service.users();
+  }
+
+  @UseGuards(AuthGuard)
   @Put("/deactivate")
   deactivate(@Req() request: AppRequest) {
     return this.service.deactivate(request.userId);
