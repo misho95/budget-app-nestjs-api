@@ -20,7 +20,6 @@ import { Roles } from "./roles.decoratior";
 import { Role } from "./role.enum";
 import { ResetPasswordValidator } from "./validators/password.reset.validator";
 import { CheckEmailValidator } from "./validators/check.email.validator";
-import { request } from "http";
 
 interface AppRequest extends Request {
   userId: string;
