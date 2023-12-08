@@ -20,10 +20,7 @@ export class AuthService {
       _id: userId,
     });
 
-    console.log(user);
-
     if (!user) {
-      console.log("we error but not working!");
       throw new BadRequestException("invalid Token");
     }
 
