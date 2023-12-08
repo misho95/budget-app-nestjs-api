@@ -18,6 +18,8 @@ const expense_service_1 = require("./expense.service");
 const auth_guard_1 = require("../auth/auth.guard");
 const expense_validation_1 = require("./expense.validation");
 const owner_guard_1 = require("../auth/owner.guard");
+const roles_decoratior_1 = require("../auth/roles.decoratior");
+const role_enum_1 = require("../auth/role.enum");
 let ExpenseController = class ExpenseController {
     constructor(expenseService) {
         this.expenseService = expenseService;
@@ -45,6 +47,9 @@ let ExpenseController = class ExpenseController {
     }
     deleteExpense(expenseId) {
         return this.expenseService.delete(expenseId);
+    }
+    clearExpenses(userId) {
+        return this.expenseService.clearExpenses(userId);
     }
     expenseByArchived(filter, req) {
         return this.expenseService.getExpenseByArchived(filter, req.userId);
@@ -129,6 +134,15 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ExpenseController.prototype, "deleteExpense", null);
+__decorate([
+    (0, roles_decoratior_1.Roles)(role_enum_1.Role.Admin),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Delete)("/clear/:userId"),
+    __param(0, (0, common_1.Param)("userId")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ExpenseController.prototype, "clearExpenses", null);
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)("/archive/filter"),

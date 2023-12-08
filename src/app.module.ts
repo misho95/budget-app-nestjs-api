@@ -3,6 +3,7 @@ import { AuthModule } from "./auth/auth.module";
 import { MongooseModule } from "@nestjs/mongoose";
 import { ExpenseModule } from "./expense/expense.module";
 import { ConfigModule } from "@nestjs/config";
+import { ChatModule } from "./chat/chat.modul";
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ConfigModule } from "@nestjs/config";
     ),
     ExpenseModule,
     AuthModule,
+    ChatModule,
   ],
   controllers: [],
   providers: [],

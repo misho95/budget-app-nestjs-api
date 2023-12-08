@@ -25,9 +25,13 @@ let AuthService = class AuthService {
         this.userModel = userModel;
     }
     async session(userId) {
-        return this.userModel.findOne({
+        const user = await this.userModel.findOne({
             _id: userId,
         });
+        if (!user) {
+            throw new common_1.BadRequestException("invalid Token");
+        }
+        return user;
     }
     async deleteAccount(userId) {
         return this.userModel.deleteOne({ _id: userId });
@@ -107,6 +111,9 @@ let AuthService = class AuthService {
             },
         });
         return { status: "ok!" };
+    }
+    async users() {
+        return await this.userModel.find().select("-password");
     }
 };
 exports.AuthService = AuthService;

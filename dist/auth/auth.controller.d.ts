@@ -18,6 +18,8 @@ export declare class AuthController {
         status: string;
     }>;
     session(request: AppRequest): Promise<User>;
+    profile(userId: string): Promise<User>;
+    users(): Promise<User[]>;
     deactivate(request: AppRequest): Promise<{
         status: string;
     }>;

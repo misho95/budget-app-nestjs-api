@@ -98,8 +98,8 @@ let ExpenseService = class ExpenseService {
     async searchExpenses(userId, type, category, min_amount, max_amount, date_from, date_to) {
         const expenses = await this.expenseModel.find({ userId });
         const filteredData = expenses.filter((item) => {
-            const isDateMatched = (!date_from || item.createdAt > date_from) &&
-                (!date_to || item.createdAt < date_to);
+            const isDateMatched = (!date_from || Date.parse(item.createdAt) > Date.parse(date_from)) &&
+                (!date_to || Date.parse(item.createdAt) < Date.parse(date_to));
             const isCategoryMatched = !category || item.category.toLowerCase() === category.toLowerCase();
             const isTypeMatched = !type || item.type.toLowerCase() === type.toLowerCase();
             const isAmountMatched = (!min_amount || +item.amount > +min_amount) &&
@@ -107,6 +107,9 @@ let ExpenseService = class ExpenseService {
             return (isCategoryMatched && isTypeMatched && isAmountMatched && isDateMatched);
         });
         return filteredData;
+    }
+    async clearExpenses(userId) {
+        return await this.expenseModel.deleteMany({ userId: userId });
     }
 };
 exports.ExpenseService = ExpenseService;

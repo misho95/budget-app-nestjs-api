@@ -48,4 +48,7 @@ export declare class AuthService {
     activate(userId: string): Promise<{
         status: string;
     }>;
+    users(): Promise<(import("mongoose").Document<unknown, {}, User> & User & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
 }

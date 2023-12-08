@@ -50,6 +50,7 @@ export declare class ExpenseController {
     deleteExpense(expenseId: string): Promise<import("@nestjs/common").BadRequestException | {
         Status: string;
     }>;
+    clearExpenses(userId: string): Promise<import("mongodb").DeleteResult>;
     expenseByArchived(filter: boolean, req: AppRequest): Promise<(import("mongoose").Document<unknown, {}, import("../models/expense.model").Expense> & import("../models/expense.model").Expense & {
         _id: import("mongoose").Types.ObjectId;
     })[]>;
