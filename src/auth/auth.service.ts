@@ -16,12 +16,14 @@ export class AuthService {
   ) {}
 
   async session(userId: string) {
-    console.log(userId);
     const user = this.userModel.findOne({
       _id: userId,
     });
 
+    console.log(user);
+
     if (!user) {
+      console.log("we error but not working!");
       throw new BadRequestException("invalid Token");
     }
 
