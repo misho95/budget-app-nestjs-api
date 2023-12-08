@@ -16,6 +16,8 @@ import { AuthGuard } from "src/auth/auth.guard";
 import { Request } from "express";
 import { ExpenseValidation } from "./expense.validation";
 import { OwnerGuard } from "src/auth/owner.guard";
+import { Roles } from "src/auth/roles.decoratior";
+import { Role } from "src/auth/role.enum";
 
 interface AppRequest extends Request {
   userId: string;
@@ -94,6 +96,13 @@ export class ExpenseController {
   @Delete("/:expenseId")
   deleteExpense(@Param("expenseId") expenseId: string) {
     return this.expenseService.delete(expenseId);
+  }
+
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard)
+  @Delete("/clear/:userId")
+  clearExpenses(@Param("userId") userId: string) {
+    return this.expenseService.delete(userId);
   }
 
   @UseGuards(AuthGuard)

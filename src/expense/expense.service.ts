@@ -131,4 +131,8 @@ export class ExpenseService {
     });
     return filteredData;
   }
+
+  async clearExpenses(userId: string) {
+    return await this.expenseModel.deleteMany({ userId });
+  }
 }
