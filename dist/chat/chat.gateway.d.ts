@@ -1,5 +1,10 @@
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
 export declare class ChatGateway {
     server: Server;
-    handleMessage(message: string): void;
+    private userSocketMap;
+    handleConnection(client: Socket): void;
+    handleMessage(data: {
+        message: string;
+        userId: string;
+    }): void;
 }

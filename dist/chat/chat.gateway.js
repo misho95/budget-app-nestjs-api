@@ -16,8 +16,20 @@ exports.ChatGateway = void 0;
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
 let ChatGateway = class ChatGateway {
-    handleMessage(message) {
-        this.server.emit("message", message);
+    constructor() {
+        this.userSocketMap = {};
+    }
+    handleConnection(client) {
+        client.on("login", (userId) => {
+            this.userSocketMap[userId] = client;
+        });
+    }
+    handleMessage(data) {
+        const { message, userId } = data;
+        const socket = this.userSocketMap[userId];
+        if (socket) {
+            socket.emit("message", message);
+        }
     }
 };
 exports.ChatGateway = ChatGateway;
@@ -29,7 +41,7 @@ __decorate([
     (0, websockets_1.SubscribeMessage)("message"),
     __param(0, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ChatGateway.prototype, "handleMessage", null);
 exports.ChatGateway = ChatGateway = __decorate([

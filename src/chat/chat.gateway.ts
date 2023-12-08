@@ -1,10 +1,14 @@
 import {
+  SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  SubscribeMessage,
   MessageBody,
 } from "@nestjs/websockets";
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
+
+interface UserSocketMap {
+  [userId: string]: Socket;
+}
 
 @WebSocketGateway({
   cors: {
@@ -13,9 +17,25 @@ import { Server } from "socket.io";
 })
 export class ChatGateway {
   @WebSocketServer() server: Server;
+  private userSocketMap: UserSocketMap = {};
+
+  handleConnection(client: Socket) {
+    // Handle new connections, for example, store user/socket mapping
+    client.on("login", (userId: string) => {
+      this.userSocketMap[userId] = client;
+    });
+  }
 
   @SubscribeMessage("message")
-  handleMessage(@MessageBody() message: string): void {
-    this.server.emit("message", message); // Broadcasts the received message to all connected clients
+  handleMessage(
+    @MessageBody() data: { message: string; userId: string }
+  ): void {
+    const { message, userId } = data;
+
+    // Retrieve the socket associated with the user
+    const socket = this.userSocketMap[userId];
+    if (socket) {
+      socket.emit("message", message);
+    }
   }
 }
