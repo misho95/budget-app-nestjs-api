@@ -16,9 +16,15 @@ export class AuthService {
   ) {}
 
   async session(userId: string) {
-    return this.userModel.findOne({
+    const user = this.userModel.findOne({
       _id: userId,
     });
+
+    if (!user) {
+      throw new BadRequestException("invalid Token");
+    }
+
+    return user;
   }
 
   async deleteAccount(userId: string) {
