@@ -102,7 +102,7 @@ export class ExpenseController {
   @UseGuards(AuthGuard)
   @Delete("/clear/:userId")
   clearExpenses(@Param("userId") userId: string) {
-    return this.expenseService.delete(userId);
+    return this.expenseService.clearExpenses(userId);
   }
 
   @UseGuards(AuthGuard)

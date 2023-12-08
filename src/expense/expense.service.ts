@@ -133,6 +133,6 @@ export class ExpenseService {
   }
 
   async clearExpenses(userId: string) {
-    return await this.expenseModel.deleteMany({ userId });
+    return await this.expenseModel.deleteMany({ userId: userId });
   }
 }
