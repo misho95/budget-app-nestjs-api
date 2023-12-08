@@ -16,6 +16,7 @@ export class AuthService {
   ) {}
 
   async session(userId: string) {
+    console.log(userId);
     const user = this.userModel.findOne({
       _id: userId,
     });
