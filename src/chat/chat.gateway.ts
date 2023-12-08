@@ -12,7 +12,7 @@ interface UserSocketMap {
 
 @WebSocketGateway({
   cors: {
-    orign: "http://localhost:5173/",
+    orign: "*",
   },
 })
 export class ChatGateway {
