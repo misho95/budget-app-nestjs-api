@@ -16,7 +16,7 @@ export class AuthService {
   ) {}
 
   async session(userId: string) {
-    const user = this.userModel.findOne({
+    const user = await this.userModel.findOne({
       _id: userId,
     });
 
