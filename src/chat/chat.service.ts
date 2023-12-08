@@ -47,7 +47,6 @@ export class ChatService {
     chat.sendFrom = sendFromUser;
     chat.sendTo = sendToUser;
 
-    await chat.save();
-    return { status: "ok!" };
+    return await chat.save();
   }
 }

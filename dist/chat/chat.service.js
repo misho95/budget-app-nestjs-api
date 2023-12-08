@@ -51,8 +51,7 @@ let ChatService = class ChatService {
         chat.message = input.message;
         chat.sendFrom = sendFromUser;
         chat.sendTo = sendToUser;
-        await chat.save();
-        return { status: "ok!" };
+        return await chat.save();
     }
 };
 exports.ChatService = ChatService;
