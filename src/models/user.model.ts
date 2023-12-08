@@ -19,6 +19,8 @@ export class User {
   active: boolean;
   @Prop({ default: null })
   deactivatedAt: Date | null;
+  @Prop({ default: null })
+  avatar: string | null;
   @Prop({ default: "user" })
   role: string;
 }

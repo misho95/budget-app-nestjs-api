@@ -9,47 +9,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserSchema = exports.User = void 0;
+exports.ChatSchema = exports.Chat = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
-let User = class User {
+const mongoose_2 = require("mongoose");
+const user_model_1 = require("./user.model");
+let Chat = class Chat {
 };
-exports.User = User;
+exports.Chat = Chat;
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], User.prototype, "firstName", void 0);
+], Chat.prototype, "userName", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], User.prototype, "userName", void 0);
+], Chat.prototype, "message", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
+    (0, mongoose_1.Prop)({ type: mongoose_2.default.Schema.Types.ObjectId, ref: "User" }),
+    __metadata("design:type", user_model_1.User)
+], Chat.prototype, "sendFrom", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: false }),
-    __metadata("design:type", Boolean)
-], User.prototype, "active", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: null }),
-    __metadata("design:type", Date)
-], User.prototype, "deactivatedAt", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: null }),
-    __metadata("design:type", String)
-], User.prototype, "avatar", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: "user" }),
-    __metadata("design:type", String)
-], User.prototype, "role", void 0);
-exports.User = User = __decorate([
+    (0, mongoose_1.Prop)({ type: mongoose_2.default.Schema.Types.ObjectId, ref: "User" }),
+    __metadata("design:type", user_model_1.User)
+], Chat.prototype, "sendTo", void 0);
+exports.Chat = Chat = __decorate([
     (0, mongoose_1.Schema)({
         timestamps: true,
     })
-], User);
-exports.UserSchema = mongoose_1.SchemaFactory.createForClass(User);
-//# sourceMappingURL=user.model.js.map
+], Chat);
+exports.ChatSchema = mongoose_1.SchemaFactory.createForClass(Chat);
+//# sourceMappingURL=chat.model.js.map
