@@ -15,21 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChatGateway = void 0;
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
+const chat_service_1 = require("./chat.service");
 let ChatGateway = class ChatGateway {
-    constructor() {
-        this.userSocketMap = {};
+    constructor(ChatService) {
+        this.ChatService = ChatService;
     }
-    handleConnection(client) {
-        client.on("login", (userId) => {
-            this.userSocketMap[userId] = client;
-        });
-    }
-    handleMessage(data) {
-        const { message, userId } = data;
-        const socket = this.userSocketMap[userId];
-        if (socket) {
-            socket.emit("message", message);
-        }
+    handleMessage(MSdata, client) {
+        const { message, data } = MSdata;
+        this.server.emit("message", { message, data });
     }
 };
 exports.ChatGateway = ChatGateway;
@@ -40,15 +33,17 @@ __decorate([
 __decorate([
     (0, websockets_1.SubscribeMessage)("message"),
     __param(0, (0, websockets_1.MessageBody)()),
+    __param(1, (0, websockets_1.ConnectedSocket)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, socket_io_1.Socket]),
     __metadata("design:returntype", void 0)
 ], ChatGateway.prototype, "handleMessage", null);
 exports.ChatGateway = ChatGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({
         cors: {
-            orign: "http://localhost:5173/",
+            origin: "*",
         },
-    })
+    }),
+    __metadata("design:paramtypes", [chat_service_1.ChatService])
 ], ChatGateway);
 //# sourceMappingURL=chat.gateway.js.map
