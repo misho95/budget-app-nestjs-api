@@ -44,8 +44,8 @@ let AuthController = class AuthController {
     profile(userId) {
         return this.service.session(userId);
     }
-    users() {
-        return this.service.users();
+    users(request) {
+        return this.service.users(request.userId);
     }
     deactivate(request) {
         return this.service.deactivate(request.userId);
@@ -105,8 +105,9 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)("/users"),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "users", null);
 __decorate([

@@ -48,7 +48,9 @@ export class ChatService {
 
     await chat.save();
 
-    const savedChat = await this.ChatModel.findOne({ _id: chat._id });
+    const savedChat = await this.ChatModel.findOne({ _id: chat._id })
+      .select("-password")
+      .exec();
 
     return savedChat;
   }

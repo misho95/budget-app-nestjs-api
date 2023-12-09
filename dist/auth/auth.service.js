@@ -112,8 +112,11 @@ let AuthService = class AuthService {
         });
         return { status: "ok!" };
     }
-    async users() {
-        return await this.userModel.find().select("-password");
+    async users(userId) {
+        return await this.userModel
+            .find({ _id: { $ne: userId } })
+            .select("-password")
+            .exec();
     }
 };
 exports.AuthService = AuthService;

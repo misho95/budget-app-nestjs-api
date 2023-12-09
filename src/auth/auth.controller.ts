@@ -63,8 +63,8 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @Get("/users")
-  users(): Promise<User[]> {
-    return this.service.users();
+  users(@Req() request: AppRequest): Promise<User[]> {
+    return this.service.users(request.userId);
   }
 
   @UseGuards(AuthGuard)
