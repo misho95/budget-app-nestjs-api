@@ -4,7 +4,6 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Chat } from "src/models/chat.model";
 import { User } from "src/models/user.model";
-import { ChatMessageType } from "./chat.type";
 
 @Injectable()
 export class ChatService {
@@ -49,9 +48,7 @@ export class ChatService {
 
     await chat.save();
 
-    const savedChat = await this.ChatModel.findById(chat._id)
-      .populate("sendFrom")
-      .populate("sendTo");
+    const savedChat = await this.ChatModel.findOne({ _id: chat._id });
 
     return savedChat;
   }

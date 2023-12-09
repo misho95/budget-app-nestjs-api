@@ -52,9 +52,7 @@ let ChatService = class ChatService {
         chat.sendFrom = sendFromUser;
         chat.sendTo = sendToUser;
         await chat.save();
-        const savedChat = await this.ChatModel.findById(chat._id)
-            .populate("sendFrom")
-            .populate("sendTo");
+        const savedChat = await this.ChatModel.findOne({ _id: chat._id });
         return savedChat;
     }
 };
