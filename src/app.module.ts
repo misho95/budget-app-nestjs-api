@@ -8,8 +8,9 @@ import { ChatModule } from "./chat/chat.modul";
 @Module({
   imports: [
     ConfigModule.forRoot(),
+
     MongooseModule.forRoot(
-      `mongodb+srv://doadmin:E60WP19NnA2L8F54@budget-app-database-350cec33.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=budget-app-database`
+      `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@budget-app-database-350cec33.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=budget-app-database`
     ),
     ExpenseModule,
     AuthModule,
