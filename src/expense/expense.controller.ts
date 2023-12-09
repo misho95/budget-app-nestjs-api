@@ -34,12 +34,6 @@ export class ExpenseController {
   }
 
   @UseGuards(AuthGuard)
-  @Get("/user/:userId")
-  usersExpenses(@Param("userId") userId: string) {
-    return this.expenseService.userExpenses(userId);
-  }
-
-  @UseGuards(AuthGuard)
   @Get("/sorted")
   expenseSorted(@Req() req: AppRequest) {
     return this.expenseService.expenseSorted(req.userId);
