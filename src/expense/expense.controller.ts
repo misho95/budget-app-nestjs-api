@@ -34,7 +34,7 @@ export class ExpenseController {
   }
 
   @UseGuards(AuthGuard)
-  @Get("/:userId")
+  @Get("/user/:userId")
   usersExpenses(@Param("userId") userId: string) {
     return this.expenseService.userExpenses(userId);
   }
