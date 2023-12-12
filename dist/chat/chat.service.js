@@ -34,7 +34,6 @@ let ChatService = class ChatService {
                 sendFrom: sendToUser.id,
                 sendTo: sendFrom,
             });
-            console.log("1", fromOneWay, "2", fromSecondWay);
             const joinedData = fromOneWay.concat(fromSecondWay);
             joinedData.sort((a, b) => {
                 return Date.parse(a.createdAt) - Date.parse(b.createdAt);

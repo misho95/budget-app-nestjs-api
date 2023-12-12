@@ -20,9 +20,17 @@ let ChatGateway = class ChatGateway {
     constructor(ChatService) {
         this.ChatService = ChatService;
     }
-    handleMessage(MSdata, client) {
-        const { message, data } = MSdata;
-        this.server.emit("message", { message, data });
+    handleJoinRoom(client, roomName) {
+        client.join(roomName);
+    }
+    handleLeaveRoom(client, roomName) {
+        client.leave(roomName);
+    }
+    handleMessage(messageData, client) {
+        const { message, data } = messageData;
+        client.rooms.forEach((room) => {
+            this.server.to(room).emit("message", { message, data });
+        });
     }
 };
 exports.ChatGateway = ChatGateway;
@@ -30,6 +38,22 @@ __decorate([
     (0, websockets_1.WebSocketServer)(),
     __metadata("design:type", socket_io_1.Server)
 ], ChatGateway.prototype, "server", void 0);
+__decorate([
+    (0, websockets_1.SubscribeMessage)("joinRoom"),
+    __param(0, (0, websockets_1.ConnectedSocket)()),
+    __param(1, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [socket_io_1.Socket, String]),
+    __metadata("design:returntype", void 0)
+], ChatGateway.prototype, "handleJoinRoom", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)("leaveRoom"),
+    __param(0, (0, websockets_1.ConnectedSocket)()),
+    __param(1, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [socket_io_1.Socket, String]),
+    __metadata("design:returntype", void 0)
+], ChatGateway.prototype, "handleLeaveRoom", null);
 __decorate([
     (0, websockets_1.SubscribeMessage)("message"),
     __param(0, (0, websockets_1.MessageBody)()),

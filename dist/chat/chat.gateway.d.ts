@@ -4,7 +4,9 @@ export declare class ChatGateway {
     private readonly ChatService;
     constructor(ChatService: ChatService);
     server: Server;
-    handleMessage(MSdata: {
+    handleJoinRoom(client: Socket, roomName: string): void;
+    handleLeaveRoom(client: Socket, roomName: string): void;
+    handleMessage(messageData: {
         message: string;
         data: any;
     }, client: Socket): void;
