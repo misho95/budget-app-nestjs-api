@@ -114,7 +114,7 @@ let AuthService = class AuthService {
     }
     async users(userId) {
         return await this.userModel
-            .find({ _id: { $ne: userId } })
+            .find({ _id: { $ne: userId }, active: true })
             .select("-password")
             .exec();
     }

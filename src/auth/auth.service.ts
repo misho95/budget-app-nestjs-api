@@ -142,7 +142,7 @@ export class AuthService {
 
   async users(userId: string) {
     return await this.userModel
-      .find({ _id: { $ne: userId } })
+      .find({ _id: { $ne: userId }, active: true })
       .select("-password")
       .exec();
   }
