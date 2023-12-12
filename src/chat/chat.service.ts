@@ -13,20 +13,24 @@ export class ChatService {
   ) {}
 
   async getMessages(sendFrom: string, sendTo: string) {
+    const sendToUser = await this.userModel.findOne({ _id: sendTo });
+
     try {
       const fromOneWay = await this.ChatModel.find({
         sendFrom: sendFrom,
-        sendTo: sendTo,
+        sendTo: sendToUser.id,
       });
 
       const fromSecondWay = await this.ChatModel.find({
-        sendFrom: sendTo,
+        sendFrom: sendToUser.id,
         sendTo: sendFrom,
       });
 
+      console.log("1", fromOneWay, "2", fromSecondWay);
+
       const joinedData: any = fromOneWay.concat(fromSecondWay);
 
-      joinedData.sort((a, b) => {
+      joinedData.sort((a: any, b: any) => {
         return Date.parse(a.createdAt) - Date.parse(b.createdAt);
       });
 
