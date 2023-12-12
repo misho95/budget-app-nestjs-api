@@ -26,8 +26,6 @@ export class ChatService {
         sendTo: sendFrom,
       });
 
-      console.log("1", fromOneWay, "2", fromSecondWay);
-
       const joinedData: any = fromOneWay.concat(fromSecondWay);
 
       joinedData.sort((a: any, b: any) => {
