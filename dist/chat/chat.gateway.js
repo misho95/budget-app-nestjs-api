@@ -15,11 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChatGateway = void 0;
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
-const chat_service_1 = require("./chat.service");
 let ChatGateway = class ChatGateway {
-    constructor(ChatService) {
-        this.ChatService = ChatService;
-    }
+    constructor() { }
     handleJoinRoom(client, roomName) {
         client.join(roomName);
     }
@@ -68,6 +65,6 @@ exports.ChatGateway = ChatGateway = __decorate([
             origin: "*",
         },
     }),
-    __metadata("design:paramtypes", [chat_service_1.ChatService])
+    __metadata("design:paramtypes", [])
 ], ChatGateway);
 //# sourceMappingURL=chat.gateway.js.map
