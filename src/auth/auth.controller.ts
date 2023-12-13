@@ -20,6 +20,7 @@ import { Roles } from "./roles.decoratior";
 import { Role } from "./role.enum";
 import { ResetPasswordValidator } from "./validators/password.reset.validator";
 import { CheckEmailValidator } from "./validators/check.email.validator";
+import { Cron } from "@nestjs/schedule";
 
 interface AppRequest extends Request {
   userId: string;
@@ -84,5 +85,10 @@ export class AuthController {
   @Delete("/:userId")
   deleteAccount(@Param("userId") userId: string) {
     return this.service.deleteAccount(userId);
+  }
+
+  @Cron("30 * * * * *")
+  handleInActiveUser() {
+    this.service.deleteInActiveUsers();
   }
 }

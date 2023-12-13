@@ -22,6 +22,7 @@ const roles_decoratior_1 = require("./roles.decoratior");
 const role_enum_1 = require("./role.enum");
 const password_reset_validator_1 = require("./validators/password.reset.validator");
 const check_email_validator_1 = require("./validators/check.email.validator");
+const schedule_1 = require("@nestjs/schedule");
 let AuthController = class AuthController {
     constructor(service) {
         this.service = service;
@@ -55,6 +56,9 @@ let AuthController = class AuthController {
     }
     deleteAccount(userId) {
         return this.service.deleteAccount(userId);
+    }
+    handleInActiveUser() {
+        this.service.deleteInActiveUsers();
     }
 };
 exports.AuthController = AuthController;
@@ -135,6 +139,12 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "deleteAccount", null);
+__decorate([
+    (0, schedule_1.Cron)("30 * * * * *"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "handleInActiveUser", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)("/api/auth"),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

@@ -7,12 +7,14 @@ import { hashSync, compareSync } from "bcryptjs";
 import { JwtService } from "@nestjs/jwt";
 import { CheckEmailValidator } from "./validators/check.email.validator";
 import { ResetPasswordValidator } from "./validators/password.reset.validator";
+import { Expense } from "src/models/expense.model";
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwt: JwtService,
-    @InjectModel(User.name) private userModel: Model<User>
+    @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(Expense.name) private expenseModel: Model<Expense>
   ) {}
 
   async session(userId: string) {
@@ -145,5 +147,24 @@ export class AuthService {
       .find({ _id: { $ne: userId }, active: true })
       .select("-password")
       .exec();
+  }
+
+  async deleteInActiveUsers() {
+    const inactiveDocuments = await this.userModel
+      .find({ active: false })
+      .exec();
+    for (const doc of inactiveDocuments) {
+      const deleteDoc = await this.userModel
+        .findOneAndDelete({ _id: doc._id })
+        .exec();
+      if (deleteDoc) {
+        const userExpenses = await this.expenseModel
+          .find({ userId: deleteDoc._id })
+          .exec();
+        for (const expense of userExpenses) {
+          await this.expenseModel.findOneAndRemove({ _id: expense._id });
+        }
+      }
+    }
   }
 }

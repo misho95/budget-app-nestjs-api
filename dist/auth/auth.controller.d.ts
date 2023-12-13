@@ -27,5 +27,6 @@ export declare class AuthController {
         status: string;
     }>;
     deleteAccount(userId: string): Promise<import("mongodb").DeleteResult>;
+    handleInActiveUser(): void;
 }
 export {};

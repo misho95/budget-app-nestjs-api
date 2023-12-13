@@ -5,11 +5,15 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { User, UserSchema } from "../models/user.model";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule } from "@nestjs/config";
+import { Expense, ExpenseSchema } from "src/models/expense.model";
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
+      { name: Expense.name, schema: ExpenseSchema },
+    ]),
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,

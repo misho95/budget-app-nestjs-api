@@ -28,10 +28,12 @@ import { Model } from "mongoose";
 import { JwtService } from "@nestjs/jwt";
 import { CheckEmailValidator } from "./validators/check.email.validator";
 import { ResetPasswordValidator } from "./validators/password.reset.validator";
+import { Expense } from "src/models/expense.model";
 export declare class AuthService {
     private readonly jwt;
     private userModel;
-    constructor(jwt: JwtService, userModel: Model<User>);
+    private expenseModel;
+    constructor(jwt: JwtService, userModel: Model<User>, expenseModel: Model<Expense>);
     session(userId: string): Promise<import("mongoose").Document<unknown, {}, User> & User & {
         _id: import("mongoose").Types.ObjectId;
     }>;
@@ -51,4 +53,5 @@ export declare class AuthService {
     users(userId: string): Promise<(import("mongoose").Document<unknown, {}, User> & User & {
         _id: import("mongoose").Types.ObjectId;
     })[]>;
+    deleteInActiveUsers(): Promise<void>;
 }

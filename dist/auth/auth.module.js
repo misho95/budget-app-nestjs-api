@@ -14,6 +14,7 @@ const mongoose_1 = require("@nestjs/mongoose");
 const user_model_1 = require("../models/user.model");
 const jwt_1 = require("@nestjs/jwt");
 const config_1 = require("@nestjs/config");
+const expense_model_1 = require("../models/expense.model");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -21,7 +22,10 @@ exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
             config_1.ConfigModule.forRoot(),
-            mongoose_1.MongooseModule.forFeature([{ name: user_model_1.User.name, schema: user_model_1.UserSchema }]),
+            mongoose_1.MongooseModule.forFeature([
+                { name: user_model_1.User.name, schema: user_model_1.UserSchema },
+                { name: expense_model_1.Expense.name, schema: expense_model_1.ExpenseSchema },
+            ]),
             jwt_1.JwtModule.register({
                 global: true,
                 secret: process.env.JWT_SECRET,

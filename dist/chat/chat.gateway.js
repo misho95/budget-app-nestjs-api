@@ -24,9 +24,9 @@ let ChatGateway = class ChatGateway {
         client.leave(roomName);
     }
     handleMessage(messageData, client) {
-        const { message, data } = messageData;
+        const { message, data, userId } = messageData;
         client.rooms.forEach((room) => {
-            this.server.to(room).emit("message", { message, data });
+            this.server.to(room).emit("message", { message, userId, data });
         });
     }
     handleTypeing(messageData) {
