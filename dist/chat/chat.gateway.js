@@ -29,6 +29,12 @@ let ChatGateway = class ChatGateway {
             this.server.to(room).emit("message", { message, data });
         });
     }
+    handleTypeing(messageData) {
+        this.server.to(messageData.roomId).emit("typeing", {
+            userId: messageData.userId,
+            isTypeing: messageData.isTypeing,
+        });
+    }
 };
 exports.ChatGateway = ChatGateway;
 __decorate([
@@ -59,6 +65,13 @@ __decorate([
     __metadata("design:paramtypes", [Object, socket_io_1.Socket]),
     __metadata("design:returntype", void 0)
 ], ChatGateway.prototype, "handleMessage", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)("typeing"),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], ChatGateway.prototype, "handleTypeing", null);
 exports.ChatGateway = ChatGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({
         cors: {

@@ -43,4 +43,18 @@ export class ChatGateway {
       this.server.to(room).emit("message", { message, data });
     });
   }
+  @SubscribeMessage("typeing")
+  handleTypeing(
+    @MessageBody()
+    messageData: {
+      roomId: string;
+      userId: string;
+      isTypeing: boolean;
+    }
+  ): void {
+    this.server.to(messageData.roomId).emit("typeing", {
+      userId: messageData.userId,
+      isTypeing: messageData.isTypeing,
+    });
+  }
 }

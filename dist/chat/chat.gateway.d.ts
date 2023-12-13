@@ -8,4 +8,9 @@ export declare class ChatGateway {
         message: string;
         data: any;
     }, client: Socket): void;
+    handleTypeing(messageData: {
+        roomId: string;
+        userId: string;
+        isTypeing: boolean;
+    }): void;
 }
