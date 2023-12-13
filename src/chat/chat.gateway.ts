@@ -34,13 +34,13 @@ export class ChatGateway {
 
   @SubscribeMessage("message")
   handleMessage(
-    @MessageBody() messageData: { message: string; data: any },
+    @MessageBody() messageData: { message: string; userId: string; data: any },
     @ConnectedSocket() client: Socket
   ): void {
-    const { message, data } = messageData;
+    const { message, data, userId } = messageData;
     // Broadcast the message to all clients in the room
     client.rooms.forEach((room: string) => {
-      this.server.to(room).emit("message", { message, data });
+      this.server.to(room).emit("message", { message, userId, data });
     });
   }
   @SubscribeMessage("typeing")
