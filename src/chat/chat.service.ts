@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
@@ -15,27 +15,14 @@ export class ChatService {
   async getMessages(sendFrom: string, sendTo: string) {
     const sendToUser = await this.userModel.findOne({ _id: sendTo });
 
-    try {
-      const fromOneWay = await this.ChatModel.find({
-        sendFrom: sendFrom,
-        sendTo: sendToUser.id,
-      });
+    const messages = await this.ChatModel.find({
+      $or: [
+        { sendFrom: sendFrom, sendTo: sendToUser.id },
+        { sendFrom: sendToUser.id, sendTo: sendFrom },
+      ],
+    }).sort({ createdAt: 1 });
 
-      const fromSecondWay = await this.ChatModel.find({
-        sendFrom: sendToUser.id,
-        sendTo: sendFrom,
-      });
-
-      const joinedData: any = fromOneWay.concat(fromSecondWay);
-
-      joinedData.sort((a: any, b: any) => {
-        return Date.parse(a.createdAt) - Date.parse(b.createdAt);
-      });
-
-      return joinedData;
-    } catch (error) {
-      new BadRequestException(error);
-    }
+    return messages;
   }
 
   async sendMessages(sendFrom: string, sendTo: string, input: any) {
@@ -50,9 +37,7 @@ export class ChatService {
 
     await chat.save();
 
-    const savedChat = await this.ChatModel.findOne({ _id: chat._id })
-      .select("-password")
-      .exec();
+    const savedChat = await this.ChatModel.findOne({ _id: chat._id });
 
     return savedChat;
   }

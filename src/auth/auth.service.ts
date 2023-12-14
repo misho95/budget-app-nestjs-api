@@ -8,12 +8,14 @@ import { JwtService } from "@nestjs/jwt";
 import { CheckEmailValidator } from "./validators/check.email.validator";
 import { ResetPasswordValidator } from "./validators/password.reset.validator";
 import { Expense } from "src/models/expense.model";
+import { Chat } from "src/models/chat.model";
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwt: JwtService,
     @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(Chat.name) private ChatModel: Model<Chat>,
     @InjectModel(Expense.name) private expenseModel: Model<Expense>
   ) {}
 
@@ -153,16 +155,27 @@ export class AuthService {
     const inactiveDocuments = await this.userModel
       .find({ active: false })
       .exec();
-    for (const doc of inactiveDocuments) {
-      const deleteDoc = await this.userModel
-        .findOneAndDelete({ _id: doc._id })
-        .exec();
-      if (deleteDoc) {
-        const userExpenses = await this.expenseModel
-          .find({ userId: deleteDoc._id })
+
+    if (inactiveDocuments) {
+      for (const doc of inactiveDocuments) {
+        const deleteDoc = await this.userModel
+          .findOneAndDelete({ _id: doc._id })
           .exec();
-        for (const expense of userExpenses) {
-          await this.expenseModel.findOneAndRemove({ _id: expense._id });
+        if (deleteDoc) {
+          const userExpenses = await this.expenseModel
+            .find({ userId: deleteDoc._id })
+            .exec();
+          for (const expense of userExpenses) {
+            await this.expenseModel.findOneAndRemove({ _id: expense._id });
+          }
+
+          const clearChat = await this.ChatModel.find({
+            $or: [{ sendFrom: deleteDoc._id }, { sendTo: deleteDoc._id }],
+          });
+
+          for (const chat of clearChat) {
+            await this.ChatModel.findOneAndRemove({ _id: chat._id });
+          }
         }
       }
     }

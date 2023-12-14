@@ -37,7 +37,9 @@ export declare class ExpenseService {
     expenseById(userId: string, expenseId: string): Promise<import("mongoose").Document<unknown, {}, Expense> & Expense & {
         _id: import("mongoose").Types.ObjectId;
     }>;
-    expenseSorted(userId: string): Promise<ExpenseType[]>;
+    expenseSorted(userId: string): Promise<(import("mongoose").Document<unknown, {}, Expense> & Expense & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
     create(userId: string, input: InputAddExpense): Promise<{
         status: string;
     }>;

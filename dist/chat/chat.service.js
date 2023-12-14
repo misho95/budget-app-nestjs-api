@@ -25,24 +25,13 @@ let ChatService = class ChatService {
     }
     async getMessages(sendFrom, sendTo) {
         const sendToUser = await this.userModel.findOne({ _id: sendTo });
-        try {
-            const fromOneWay = await this.ChatModel.find({
-                sendFrom: sendFrom,
-                sendTo: sendToUser.id,
-            });
-            const fromSecondWay = await this.ChatModel.find({
-                sendFrom: sendToUser.id,
-                sendTo: sendFrom,
-            });
-            const joinedData = fromOneWay.concat(fromSecondWay);
-            joinedData.sort((a, b) => {
-                return Date.parse(a.createdAt) - Date.parse(b.createdAt);
-            });
-            return joinedData;
-        }
-        catch (error) {
-            new common_1.BadRequestException(error);
-        }
+        const messages = await this.ChatModel.find({
+            $or: [
+                { sendFrom: sendFrom, sendTo: sendToUser.id },
+                { sendFrom: sendToUser.id, sendTo: sendFrom },
+            ],
+        }).sort({ createdAt: 1 });
+        return messages;
     }
     async sendMessages(sendFrom, sendTo, input) {
         const sendFromUser = await this.userModel.findOne({ _id: sendFrom });
@@ -53,9 +42,7 @@ let ChatService = class ChatService {
         chat.sendFrom = sendFromUser;
         chat.sendTo = sendToUser;
         await chat.save();
-        const savedChat = await this.ChatModel.findOne({ _id: chat._id })
-            .select("-password")
-            .exec();
+        const savedChat = await this.ChatModel.findOne({ _id: chat._id });
         return savedChat;
     }
 };

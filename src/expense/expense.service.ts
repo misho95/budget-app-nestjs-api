@@ -21,10 +21,10 @@ export class ExpenseService {
   }
 
   async expenseSorted(userId: string) {
-    const expenses: ExpenseType[] = await this.expenseModel.find({ userId });
-    return expenses.sort((a, b) => {
-      return Date.parse(b.createdAt) - Date.parse(a.createdAt);
-    });
+    const expenses = await this.expenseModel
+      .find({ userId })
+      .sort({ updatedAt: -1 });
+    return expenses;
   }
 
   async create(userId: string, input: InputAddExpense) {

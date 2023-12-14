@@ -6,6 +6,7 @@ import { User, UserSchema } from "../models/user.model";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule } from "@nestjs/config";
 import { Expense, ExpenseSchema } from "src/models/expense.model";
+import { Chat, ChatSchema } from "src/models/chat.model";
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { Expense, ExpenseSchema } from "src/models/expense.model";
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
       { name: Expense.name, schema: ExpenseSchema },
+      { name: Chat.name, schema: ChatSchema },
     ]),
     JwtModule.register({
       global: true,

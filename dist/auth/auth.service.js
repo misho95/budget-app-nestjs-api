@@ -20,10 +20,12 @@ const mongoose_2 = require("mongoose");
 const bcryptjs_1 = require("bcryptjs");
 const jwt_1 = require("@nestjs/jwt");
 const expense_model_1 = require("../models/expense.model");
+const chat_model_1 = require("../models/chat.model");
 let AuthService = class AuthService {
-    constructor(jwt, userModel, expenseModel) {
+    constructor(jwt, userModel, ChatModel, expenseModel) {
         this.jwt = jwt;
         this.userModel = userModel;
+        this.ChatModel = ChatModel;
         this.expenseModel = expenseModel;
     }
     async session(userId) {
@@ -124,16 +126,24 @@ let AuthService = class AuthService {
         const inactiveDocuments = await this.userModel
             .find({ active: false })
             .exec();
-        for (const doc of inactiveDocuments) {
-            const deleteDoc = await this.userModel
-                .findOneAndDelete({ _id: doc._id })
-                .exec();
-            if (deleteDoc) {
-                const userExpenses = await this.expenseModel
-                    .find({ userId: deleteDoc._id })
+        if (inactiveDocuments) {
+            for (const doc of inactiveDocuments) {
+                const deleteDoc = await this.userModel
+                    .findOneAndDelete({ _id: doc._id })
                     .exec();
-                for (const expense of userExpenses) {
-                    await this.expenseModel.findOneAndRemove({ _id: expense._id });
+                if (deleteDoc) {
+                    const userExpenses = await this.expenseModel
+                        .find({ userId: deleteDoc._id })
+                        .exec();
+                    for (const expense of userExpenses) {
+                        await this.expenseModel.findOneAndRemove({ _id: expense._id });
+                    }
+                    const clearChat = await this.ChatModel.find({
+                        $or: [{ sendFrom: deleteDoc._id }, { sendTo: deleteDoc._id }],
+                    });
+                    for (const chat of clearChat) {
+                        await this.ChatModel.findOneAndRemove({ _id: chat._id });
+                    }
                 }
             }
         }
@@ -143,8 +153,10 @@ exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __param(1, (0, mongoose_1.InjectModel)(user_model_1.User.name)),
-    __param(2, (0, mongoose_1.InjectModel)(expense_model_1.Expense.name)),
+    __param(2, (0, mongoose_1.InjectModel)(chat_model_1.Chat.name)),
+    __param(3, (0, mongoose_1.InjectModel)(expense_model_1.Expense.name)),
     __metadata("design:paramtypes", [jwt_1.JwtService,
+        mongoose_2.Model,
         mongoose_2.Model,
         mongoose_2.Model])
 ], AuthService);

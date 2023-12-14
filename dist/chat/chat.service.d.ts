@@ -29,7 +29,9 @@ export declare class ChatService {
     private ChatModel;
     private userModel;
     constructor(ChatModel: Model<Chat>, userModel: Model<User>);
-    getMessages(sendFrom: string, sendTo: string): Promise<any>;
+    getMessages(sendFrom: string, sendTo: string): Promise<(import("mongoose").Document<unknown, {}, Chat> & Chat & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
     sendMessages(sendFrom: string, sendTo: string, input: any): Promise<import("mongoose").Document<unknown, {}, Chat> & Chat & {
         _id: import("mongoose").Types.ObjectId;
     }>;

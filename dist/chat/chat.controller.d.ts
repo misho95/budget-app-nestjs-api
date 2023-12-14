@@ -32,7 +32,9 @@ interface AppRequest extends Request {
 export declare class ChatController {
     private readonly ChatService;
     constructor(ChatService: ChatService);
-    getMessages(req: AppRequest, sendTo: string): Promise<any>;
+    getMessages(req: AppRequest, sendTo: string): Promise<(import("mongoose").Document<unknown, {}, import("../models/chat.model").Chat> & import("../models/chat.model").Chat & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
     sendMessages(req: AppRequest, sendTo: string, input: messageValidation): Promise<import("mongoose").Document<unknown, {}, import("../models/chat.model").Chat> & import("../models/chat.model").Chat & {
         _id: import("mongoose").Types.ObjectId;
     }>;

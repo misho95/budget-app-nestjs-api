@@ -29,11 +29,13 @@ import { JwtService } from "@nestjs/jwt";
 import { CheckEmailValidator } from "./validators/check.email.validator";
 import { ResetPasswordValidator } from "./validators/password.reset.validator";
 import { Expense } from "src/models/expense.model";
+import { Chat } from "src/models/chat.model";
 export declare class AuthService {
     private readonly jwt;
     private userModel;
+    private ChatModel;
     private expenseModel;
-    constructor(jwt: JwtService, userModel: Model<User>, expenseModel: Model<Expense>);
+    constructor(jwt: JwtService, userModel: Model<User>, ChatModel: Model<Chat>, expenseModel: Model<Expense>);
     session(userId: string): Promise<import("mongoose").Document<unknown, {}, User> & User & {
         _id: import("mongoose").Types.ObjectId;
     }>;

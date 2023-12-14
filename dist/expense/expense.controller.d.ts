@@ -35,7 +35,9 @@ export declare class ExpenseController {
     myExpenses(req: AppRequest): Promise<(import("mongoose").Document<unknown, {}, import("../models/expense.model").Expense> & import("../models/expense.model").Expense & {
         _id: import("mongoose").Types.ObjectId;
     })[]>;
-    expenseSorted(req: AppRequest): Promise<import("./expense.interface").ExpenseType[]>;
+    expenseSorted(req: AppRequest): Promise<(import("mongoose").Document<unknown, {}, import("../models/expense.model").Expense> & import("../models/expense.model").Expense & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
     countExpenses(req: AppRequest, type: string, value: string): Promise<number | import("@nestjs/common").BadRequestException>;
     searchExpenses(req: AppRequest, type: string, category: string, min_amount: number, max_amount: number, date_from: string, date_to: string): Promise<import("./expense.interface").ExpenseType[]>;
     expenseById(req: AppRequest, expenseId: string): Promise<import("mongoose").Document<unknown, {}, import("../models/expense.model").Expense> & import("../models/expense.model").Expense & {

@@ -30,10 +30,10 @@ let ExpenseService = class ExpenseService {
         return await this.expenseModel.findOne({ _id: expenseId, userId });
     }
     async expenseSorted(userId) {
-        const expenses = await this.expenseModel.find({ userId });
-        return expenses.sort((a, b) => {
-            return Date.parse(b.createdAt) - Date.parse(a.createdAt);
-        });
+        const expenses = await this.expenseModel
+            .find({ userId })
+            .sort({ updatedAt: -1 });
+        return expenses;
     }
     async create(userId, input) {
         const user = await this.userModel.findOne({ _id: userId });

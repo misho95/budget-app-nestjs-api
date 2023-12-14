@@ -11,11 +11,11 @@ export class User {
   firstName: string;
   @Prop({ required: true })
   userName: string;
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   email: string;
   @Prop({ required: true })
   password: string;
-  @Prop({ default: false })
+  @Prop({ default: true })
   active: boolean;
   @Prop({ default: null })
   deactivatedAt: Date | null;
