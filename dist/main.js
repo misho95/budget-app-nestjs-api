@@ -7,7 +7,9 @@ const cookieParser = require("cookie-parser");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.enableCors({
-        origin: "https://budget-app-fullstack-front.vercel.app/",
+        origin: "*",
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        allowedHeaders: "Content-Type,Authorization",
         credentials: true,
     });
     app.use(cookieParser(process.env.COOKIE_SECRET));
