@@ -25,11 +25,10 @@ let AuthGuard = class AuthGuard {
     }
     async canActivate(context) {
         const request = context.switchToHttp().getRequest();
-        const headers = request["headers"];
-        const hasTokenHeader = "authorization" in headers;
-        if (!hasTokenHeader)
+        const cookies = request.cookies["authToken"];
+        if (!cookies)
             return false;
-        const token = headers["authorization"];
+        const token = request.cookies["authToken"];
         try {
             const payload = this.jwt.verify(token);
             const userId = payload.id;

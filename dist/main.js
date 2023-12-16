@@ -6,8 +6,11 @@ const common_1 = require("@nestjs/common");
 const cookieParser = require("cookie-parser");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
-    app.enableCors();
-    app.use(cookieParser());
+    app.enableCors({
+        origin: "https://budget-app-fullstack-front.vercel.app/",
+        credentials: true,
+    });
+    app.use(cookieParser(process.env.COOKIE_SECRET));
     app.useGlobalPipes(new common_1.ValidationPipe());
     const port = process.env.PORT || 8080;
     await app.listen(port);

@@ -27,11 +27,25 @@ let AuthController = class AuthController {
     constructor(service) {
         this.service = service;
     }
-    signIn(input) {
-        return this.service.signin(input);
+    async signIn(input, response) {
+        const ifToken = await this.service.signin(input);
+        if (ifToken) {
+            response.cookie("authToken", ifToken.accessToken, { httpOnly: true });
+            return { message: "success!" };
+        }
+        return ifToken;
     }
-    signUp(input) {
-        return this.service.signup(input);
+    async signUp(input, response) {
+        const ifToken = await this.service.signup(input);
+        if (ifToken) {
+            response.cookie("authToken", ifToken.accessToken, { httpOnly: true });
+            return { message: "success!" };
+        }
+        return ifToken;
+    }
+    clear(response) {
+        response.cookie("authToken", undefined, { httpOnly: true });
+        return { message: "success!" };
     }
     checkEmail(input) {
         return this.service.checkForUserExist(input);
@@ -65,17 +79,26 @@ exports.AuthController = AuthController;
 __decorate([
     (0, common_1.Post)("/signin"),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)({ passthrough: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signIn", null);
 __decorate([
     (0, common_1.Post)("/signup"),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)({ passthrough: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [signup_validation_1.SignUpValidator]),
+    __metadata("design:paramtypes", [signup_validation_1.SignUpValidator, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signUp", null);
+__decorate([
+    (0, common_1.Post)("/signout"),
+    __param(0, (0, common_1.Res)({ passthrough: true })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "clear", null);
 __decorate([
     (0, common_1.Get)("/checkemail"),
     __param(0, (0, common_1.Body)()),

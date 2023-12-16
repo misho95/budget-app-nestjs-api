@@ -7,10 +7,11 @@ import {
   Post,
   Put,
   Req,
+  Res,
   UseGuards,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { AuthToken, InputSignIn } from "./auth.interface";
+import { InputSignIn } from "./auth.interface";
 import { AuthGuard } from "./auth.guard";
 import { Request } from "express";
 import { User } from "src/models/user.model";
@@ -26,18 +27,45 @@ interface AppRequest extends Request {
   userId: string;
 }
 
+interface CustomResponse extends Response {
+  cookie(name: string, value: any, options?: any): this;
+}
+
 @Controller("/api/auth")
 export class AuthController {
   constructor(private readonly service: AuthService) {}
 
   @Post("/signin")
-  signIn(@Body() input: InputSignIn): Promise<AuthToken> {
-    return this.service.signin(input);
+  async signIn(
+    @Body() input: InputSignIn,
+    @Res({ passthrough: true }) response: CustomResponse
+  ) {
+    const ifToken = await this.service.signin(input);
+    if (ifToken) {
+      response.cookie("authToken", ifToken.accessToken, { httpOnly: true });
+      return { message: "success!" };
+    }
+    return ifToken;
   }
 
   @Post("/signup")
-  signUp(@Body() input: SignUpValidator): Promise<AuthToken> {
-    return this.service.signup(input);
+  async signUp(
+    @Body() input: SignUpValidator,
+    @Res({ passthrough: true }) response: CustomResponse
+  ) {
+    const ifToken = await this.service.signup(input);
+    if (ifToken) {
+      response.cookie("authToken", ifToken.accessToken, { httpOnly: true });
+      return { message: "success!" };
+    }
+
+    return ifToken;
+  }
+
+  @Post("/signout")
+  clear(@Res({ passthrough: true }) response: CustomResponse) {
+    response.cookie("authToken", undefined, { httpOnly: true });
+    return { message: "success!" };
   }
 
   @Get("/checkemail")
