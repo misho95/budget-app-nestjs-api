@@ -23,6 +23,12 @@ const role_enum_1 = require("./role.enum");
 const password_reset_validator_1 = require("./validators/password.reset.validator");
 const check_email_validator_1 = require("./validators/check.email.validator");
 const schedule_1 = require("@nestjs/schedule");
+const cookieOptions = {
+    httpOnly: true,
+    maxAge: 60 * 60,
+    secure: true,
+    sameSite: "strict",
+};
 let AuthController = class AuthController {
     constructor(service) {
         this.service = service;
@@ -30,7 +36,7 @@ let AuthController = class AuthController {
     async signIn(input, response) {
         const ifToken = await this.service.signin(input);
         if (ifToken) {
-            response.cookie("authToken", ifToken.accessToken, { httpOnly: true });
+            response.cookie("authToken", ifToken.accessToken, cookieOptions);
             return { message: "success!" };
         }
         return ifToken;
@@ -38,7 +44,7 @@ let AuthController = class AuthController {
     async signUp(input, response) {
         const ifToken = await this.service.signup(input);
         if (ifToken) {
-            response.cookie("authToken", ifToken.accessToken, { httpOnly: true });
+            response.cookie("authToken", ifToken.accessToken, cookieOptions);
             return { message: "success!" };
         }
         return ifToken;

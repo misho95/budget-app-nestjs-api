@@ -14,6 +14,7 @@ const expense_module_1 = require("./expense/expense.module");
 const config_1 = require("@nestjs/config");
 const chat_modul_1 = require("./chat/chat.modul");
 const schedule_1 = require("@nestjs/schedule");
+const mongoUrl = `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@budget-app.nl70ndg.mongodb.net/`;
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -22,7 +23,7 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             config_1.ConfigModule.forRoot(),
             schedule_1.ScheduleModule.forRoot(),
-            mongoose_1.MongooseModule.forRoot(`mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@budget-app-database-350cec33.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=budget-app-database`),
+            mongoose_1.MongooseModule.forRoot(mongoUrl),
             expense_module_1.ExpenseModule,
             auth_module_1.AuthModule,
             chat_modul_1.ChatModule,

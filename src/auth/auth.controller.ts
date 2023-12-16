@@ -31,6 +31,13 @@ interface CustomResponse extends Response {
   cookie(name: string, value: any, options?: any): this;
 }
 
+const cookieOptions = {
+  httpOnly: true,
+  maxAge: 60 * 60,
+  secure: true,
+  sameSite: "strict",
+};
+
 @Controller("/api/auth")
 export class AuthController {
   constructor(private readonly service: AuthService) {}
@@ -42,7 +49,7 @@ export class AuthController {
   ) {
     const ifToken = await this.service.signin(input);
     if (ifToken) {
-      response.cookie("authToken", ifToken.accessToken, { httpOnly: true });
+      response.cookie("authToken", ifToken.accessToken, cookieOptions);
       return { message: "success!" };
     }
     return ifToken;
@@ -55,7 +62,7 @@ export class AuthController {
   ) {
     const ifToken = await this.service.signup(input);
     if (ifToken) {
-      response.cookie("authToken", ifToken.accessToken, { httpOnly: true });
+      response.cookie("authToken", ifToken.accessToken, cookieOptions);
       return { message: "success!" };
     }
 

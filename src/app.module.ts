@@ -6,13 +6,13 @@ import { ConfigModule } from "@nestjs/config";
 import { ChatModule } from "./chat/chat.modul";
 import { ScheduleModule } from "@nestjs/schedule";
 
+const mongoUrl = `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@budget-app.nl70ndg.mongodb.net/`;
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
     ScheduleModule.forRoot(),
-    MongooseModule.forRoot(
-      `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@budget-app-database-350cec33.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=budget-app-database`
-    ),
+    MongooseModule.forRoot(mongoUrl),
     ExpenseModule,
     AuthModule,
     ChatModule,
